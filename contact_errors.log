@@ -1,0 +1,10 @@
+[2026-01-04 14:36:25] SMTP MAIL FROM Error: 550 Account mydharm@mydharm.com can not send emails from tech@mydharm.com.
+[2026-01-04 14:36:25] Contact form SMTP error: Failed to send email to san4851@gmail.com
+[2026-01-04 14:36:25] Attempting fallback to mail() function
+[2026-01-04 14:36:25] Fallback mail() also failed
+[2026-01-04 14:36:25] Failed to send email. SMTP: mail.mydharm.com:587
+[2026-01-04 14:48:17] SMTP MAIL FROM Error: 550 Account mydharm@mydharm.com can not send emails from tech@mydharm.com.
+[2026-01-04 14:48:17] Contact form SMTP error: Failed to send email to san4851@gmail.com
+[2026-01-04 14:48:17] Attempting fallback to mail() function
+[2026-01-04 14:48:17] Fallback mail() also failed
+[2026-01-04 14:48:17] Failed to send email. SMTP: mail.mydharm.com:587
