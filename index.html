@@ -22,6 +22,10 @@
     <meta property="og:url" content="https://tech.mydharm.com/">
     <meta property="og:title" content="myDharm Technologies - Web Development, Mobile Apps & IT Training">
     <meta property="og:description" content="Professional web development, e-commerce solutions, WordPress customization, mobile app development, and IT training services in Rajsamand, Rajasthan.">
+    <meta property="og:image" content="https://tech.mydharm.com/logo/myDharm-Technologies-logo.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="myDharm Technologies Logo - Web Development, Mobile Apps & IT Training">
     <meta property="og:site_name" content="myDharm Technologies">
     <meta property="og:locale" content="en_IN">
     
@@ -30,6 +34,8 @@
     <meta property="twitter:url" content="https://tech.mydharm.com/">
     <meta property="twitter:title" content="myDharm Technologies - Web Development, Mobile Apps & IT Training">
     <meta property="twitter:description" content="Professional web development, e-commerce solutions, WordPress customization, mobile app development, and IT training services.">
+    <meta property="twitter:image" content="https://tech.mydharm.com/logo/myDharm-Technologies-logo.png">
+    <meta property="twitter:image:alt" content="myDharm Technologies Logo - Web Development, Mobile Apps & IT Training">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://tech.mydharm.com/">
@@ -54,7 +60,7 @@
         "name": "myDharm Technologies",
         "alternateName": "myDharmTech",
         "url": "https://tech.mydharm.com",
-        "logo": "https://tech.mydharm.com/logo.png",
+        "logo": "https://tech.mydharm.com/logo/myDharm-Technologies-logo.png",
         "description": "Professional web development, mobile app development, WordPress customization, e-commerce solutions, and IT training services.",
         "address": {
             "@type": "PostalAddress",
@@ -148,7 +154,7 @@
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "name": "myDharm Technologies",
-        "image": "https://tech.mydharm.com/logo.png",
+        "image": "https://tech.mydharm.com/logo/myDharm-Technologies-logo.png",
         "@id": "https://tech.mydharm.com",
         "url": "https://tech.mydharm.com",
         "telephone": "+91-7303040312",
@@ -276,6 +282,48 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+
+        .navbar-logo {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .hero-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-logo-img {
+            max-width: 120px;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(99, 102, 241, 0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .hero-logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .navbar-nav .nav-link {
@@ -644,6 +692,14 @@
                 min-height: calc(100vh - 70px);
                 padding: 2rem 1rem;
             }
+
+            .hero-logo-img {
+                max-width: 100px;
+            }
+
+            .navbar-logo {
+                height: 35px;
+            }
         }
     </style>
 </head>
@@ -657,9 +713,12 @@
     </button>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-custom fixed-top" id="navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-custom fixed-top" id="navbar" role="navigation" aria-label="Main navigation">
         <div class="container">
-            <a class="navbar-brand" href="#home" aria-label="myDharm Technologies Home" itemprop="url"><span itemprop="name">myDharm Technologies</span></a>
+            <a class="navbar-brand d-flex align-items-center" href="#home" aria-label="myDharm Technologies Home" itemprop="url">
+                <img src="logo/myDharm-Technologies-logo.png" alt="myDharm Technologies Logo - Web Development, Mobile Apps & IT Training" class="navbar-logo" width="40" height="40" loading="eager" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                <meta itemprop="url" content="https://tech.mydharm.com/logo/myDharm-Technologies-logo.png">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation menu">
                 <span class="navbar-toggler-icon" aria-hidden="true"></span>
             </button>
@@ -692,11 +751,16 @@
     <section id="home" class="hero-section" itemscope itemtype="https://schema.org/Organization">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-10 text-center hero-content">
-                    <h1 class="hero-title" itemprop="name">myDharm Technologies</h1>
-                    <p class="hero-subtitle" itemprop="description">Technology Solutions & IT Education for Modern Businesses</p>
-                    <p class="hero-subtitle" style="font-size: 1.1rem; margin-top: -1rem;">Building scalable solutions and shaping future-ready talent</p>
-                    <div class="mt-4">
+                <div class="hero-content">
+                    <div class="text-center">
+                        <h1 class="hero-title" itemprop="name">myDharm Technologies</h1>
+                    </div>
+                    <div class="text-center">
+                        <p class="hero-tagline" style="font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 600; color: var(--primary-color); margin-top: -1.5rem; margin-bottom: 1rem; letter-spacing: 0.5px;">Tech for Business. Skills for Students.</p>
+                    </div>
+                    <p class="hero-subtitle text-center" itemprop="description">Technology Solutions & IT Education for Modern Businesses</p>
+                    <p class="hero-subtitle text-center" style="font-size: 1.1rem; margin-top: -1rem;">Building scalable solutions and shaping future-ready talent</p>
+                    <div class="mt-4 text-center">
                         <a href="#contact" class="btn btn-primary-custom me-3 mb-3" aria-label="Get started with myDharm Technologies">Get Started</a>
                         <a href="#services" class="btn btn-secondary-custom mb-3" aria-label="View our services">Our Services</a>
                     </div>
