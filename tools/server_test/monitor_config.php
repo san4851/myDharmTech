@@ -6,6 +6,10 @@
  * Configure all settings for the monitoring script
  */
 
+// Load environment variables
+require_once __DIR__ . '/../../env_loader.php';
+$env = loadEnv(__DIR__ . '/../../.env');
+
 return [
     // Email Configuration
     'email' => [
@@ -15,36 +19,26 @@ return [
         'subject_failure' => '[udaipurupdate.com] Hosting Service Alert - Failure Detected',
         'subject_hourly' => '[udaipurupdate.com] Hosting Service Hourly Report',
         'smtp' => [
-            // Udaipurupdate.com SMTP server
-            // 'host' => 'mail.udaipurupdate.com',  // SMTP server
-            // 'port' => 465,
-            // 'username' => 'admin@udaipurupdate.com',  // SMTP username
-            // 'password' => 'ENpQG4a0S@xs!*s',  // SMTP password or app password
-            // 'encryption' => 'ssl',  // 'tls' or 'ssl' (use 'ssl' for port 465)
-            // myDharm.com SMTP server
-            'host' => 'mail.mydharm.com',  // SMTP server
-            'port' => 587,
-            'username' => 'mydharm@mydharm.com',  // SMTP username
-            'password' => 'New#854ed#za#',  // SMTP password or app password
-            'encryption' => 'tls',  // 'tls' or 'ssl' (use 'ssl' for port 465)
+            // SMTP settings loaded from .env file
+            'host' => $env['SMTP_HOST'] ?? 'mail.mydharm.com',
+            'port' => (int)($env['SMTP_PORT'] ?? 587),
+            'username' => $env['SMTP_USERNAME'] ?? '',
+            'password' => $env['SMTP_PASSWORD'] ?? '',
+            'encryption' => $env['SMTP_ENCRYPTION'] ?? 'tls',  // 'tls' or 'ssl' (use 'ssl' for port 465)
         ],
     ],
 
     // Database Configuration
     'database' => [
         'enabled' => true,
-        'host' => 'localhost',
-        'port' => 3306,
-        // udapurupdate.com database
-        // 'name' => 'udaipuru_wp305',
-        // 'username' => 'udaipuru_wp305',
-        // 'password' => '0s.S(597pG',
-        // mydharm.com database
-        'name' => 'mydharm_appdb',
-        'username' => 'mydharm_appdb',
-        'password' => 'tuPzX7hcYhaFRpEj2rph',
-        'type' => 'mysql',  // 'mysql' or 'pgsql'
-        'timeout' => 5,  // Connection timeout in seconds
+        'host' => $env['DB_HOST'] ?? 'localhost',
+        'port' => (int)($env['DB_PORT'] ?? 3306),
+        // Database settings loaded from .env file
+        'name' => $env['DB_NAME'] ?? 'mydharm_appdb',
+        'username' => $env['DB_USERNAME'] ?? 'mydharm_appdb',
+        'password' => $env['DB_PASSWORD'] ?? '',
+        'type' => $env['DB_TYPE'] ?? 'mysql',  // 'mysql' or 'pgsql'
+        'timeout' => (int)($env['DB_TIMEOUT'] ?? 5),  // Connection timeout in seconds
     ],
 
     // Redis Configuration

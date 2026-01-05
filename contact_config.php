@@ -6,6 +6,10 @@
  * Configure your email settings here
  */
 
+// Load environment variables
+require_once __DIR__ . '/env_loader.php';
+$env = loadEnv(__DIR__ . '/.env');
+
 return [
     // Recipient email address (where form submissions will be sent)
     'recipient_email' => 'san4851@gmail.com',
@@ -68,11 +72,11 @@ return [
 
     // SMTP Configuration (optional - if you want to use SMTP instead of mail())
     'smtp_enabled' => true,
-    'smtp_host' => 'mail.mydharm.com',
-    'smtp_port' => 587,
-    'smtp_username' => 'tech@mydharm.com',
-    'smtp_password' => 'New#854ed#za#',
-    'smtp_encryption' => 'tls', // 'tls' or 'ssl'
+    'smtp_host' => $env['SMTP_HOST'] ?? 'mail.mydharm.com',
+    'smtp_port' => (int)($env['SMTP_PORT'] ?? 587),
+    'smtp_username' => $env['SMTP_USERNAME'] ?? 'tech@mydharm.com',
+    'smtp_password' => $env['SMTP_PASSWORD'] ?? '',
+    'smtp_encryption' => $env['SMTP_ENCRYPTION'] ?? 'tls', // 'tls' or 'ssl'
 
     // Debug mode (set to true to see detailed error messages - disable in production!)
     'debug_mode' => true,
