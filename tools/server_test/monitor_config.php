@@ -113,7 +113,11 @@ return [
     // Logging Configuration
     'logging' => [
         'enabled' => true,
-        'log_file' => __DIR__ . '/monitor.log',
+        'log_file' => isset($env['MONITOR_LOG_FILE'])
+            ? (strpos($env['MONITOR_LOG_FILE'], '/') === 0
+                ? $env['MONITOR_LOG_FILE']
+                : __DIR__ . '/../../' . $env['MONITOR_LOG_FILE'])
+            : __DIR__ . '/monitor.log',
         'max_log_size' => 10485760,  // 10MB in bytes
     ],
 ];

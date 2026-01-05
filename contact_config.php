@@ -47,8 +47,8 @@ return [
     // Enable logging
     'enable_logging' => true,
 
-    // Log file path (relative to this file)
-    'log_file' => 'contact_logs.txt',
+    // Log file path (loaded from .env)
+    'log_file' => $env['CONTACT_LOG_FILE'] ?? 'contact_logs.txt',
 
     // Allowed services (for validation)
     'allowed_services' => [
