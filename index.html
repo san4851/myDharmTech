@@ -433,6 +433,28 @@
             box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
         }
 
+        .brand-logo-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 110px;
+            padding: 0.75rem;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .brand-logo-link:hover {
+            transform: scale(1.03);
+        }
+
+        .brand-logo-img {
+            max-width: 100%;
+            max-height: 80px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
         .card-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
@@ -1001,6 +1023,36 @@
         </div>
     </section>
 
+    <!-- Product & Client Section -->
+    <section id="product-client" class="section bg-darker-custom">
+        <div class="container">
+            <h2 class="section-title text-center">Products &amp; Clients</h2>
+            <p class="section-subtitle text-center">Discover our flagship product and the organizations that trust us.</p>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="custom-card text-center">
+                        <h3 class="mb-4">Our Product</h3>
+                        <a href="https://www.mydharm.com/" target="_blank" rel="noopener noreferrer" class="brand-logo-link" aria-label="Visit myDharm.com (opens in new tab)">
+                            <img src="our-product/myDharm.com-logo.png" alt="myDharm.com Logo" class="brand-logo-img" loading="lazy">
+                        </a>
+                        <p class="text-secondary-custom mb-0">www.mydharm.com</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="custom-card text-center">
+                        <h3 class="mb-4">Our Client</h3>
+                        <a href="https://www.udaipurupdate.com/" target="_blank" rel="noopener noreferrer" class="brand-logo-link" aria-label="Visit udaipurupdate.com (opens in new tab)">
+                            <img src="our-client/udaipurupdate.com-logo.png" alt="udaipurupdate.com Logo" class="brand-logo-img" loading="lazy">
+                        </a>
+                        <p class="text-secondary-custom mb-0">www.udaipurupdate.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Training Section -->
     <section id="training" class="section bg-darker-custom">
         <div class="container">
@@ -1087,11 +1139,12 @@
                         <h3><i class="bi bi-robot"></i> AI & Automation</h3>
                         <p class="text-secondary-custom mb-3">Leveraging artificial intelligence and automation tools to enhance efficiency and innovation in our solutions.</p>
                         <div>
-                            <span class="tech-tag">Machine Learning</span>
                             <span class="tech-tag">AI Integration</span>
                             <span class="tech-tag">Automation Tools</span>
                             <span class="tech-tag">ChatGPT API</span>
-                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">Agentic AI</span>
+                            <span class="tech-tag">Codex</span>
+                            <span class="tech-tag">Cursor AI</span>
                         </div>
                     </div>
                 </div>
