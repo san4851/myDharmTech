@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tech.mydharm.com/sitemap.xml
