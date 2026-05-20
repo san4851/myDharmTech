@@ -1,0 +1,24 @@
+# SEO URL normalization and legacy URL redirects for tech.mydharm.com
+RewriteEngine On
+
+# Keep key section URLs canonical with trailing slash
+RewriteRule ^(about|services|industries|approach|training|contact|why-choose|products-clients|technology-stack|community)$ $1/ [R=301,L,NC]
+
+# Legacy query-param redirects (if old links used ?section=...)
+RewriteCond %{QUERY_STRING} (^|&)section=about(&|$) [NC]
+RewriteRule ^$ about/? [R=301,L]
+
+RewriteCond %{QUERY_STRING} (^|&)section=services(&|$) [NC]
+RewriteRule ^$ services/? [R=301,L]
+
+RewriteCond %{QUERY_STRING} (^|&)section=industries(&|$) [NC]
+RewriteRule ^$ industries/? [R=301,L]
+
+RewriteCond %{QUERY_STRING} (^|&)section=approach(&|$) [NC]
+RewriteRule ^$ approach/? [R=301,L]
+
+RewriteCond %{QUERY_STRING} (^|&)section=training(&|$) [NC]
+RewriteRule ^$ training/? [R=301,L]
+
+RewriteCond %{QUERY_STRING} (^|&)section=contact(&|$) [NC]
+RewriteRule ^$ contact/? [R=301,L]
