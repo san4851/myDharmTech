@@ -152,6 +152,42 @@ body {
     padding: 1.5rem;
 }
 
+.contact-panels-row > [class*="col-"] {
+    display: flex;
+}
+
+.contact-panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.contact-panels-row .contact-form,
+.contact-panels-row .contact-map-card {
+    flex: 1 1 auto;
+    height: 100%;
+}
+
+.contact-map-card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-map-card > div:last-child {
+    flex-shrink: 0;
+}
+
+.contact-map-frame {
+    position: relative;
+    width: 100%;
+    min-height: 320px;
+    flex: 1 1 auto;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+}
+
 .btn-primary-custom {
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     border: none;
@@ -255,6 +291,18 @@ body {
 @media (max-width: 768px) {
     .section {
         padding: 3rem 0;
+    }
+
+    .contact-panels-row > [class*="col-"] {
+        display: block;
+    }
+
+    .contact-panel {
+        height: auto;
+    }
+
+    .contact-map-frame {
+        min-height: 280px;
     }
 
     .navbar-logo {

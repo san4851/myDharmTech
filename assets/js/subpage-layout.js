@@ -42,12 +42,6 @@
         footerTarget.innerHTML =
             '<footer class="shared-footer text-center" role="contentinfo" itemscope itemtype="https://schema.org/WPFooter">' +
                 '<div class="container">' +
-                    '<div class="shared-footer-links">' +
-                        '<a href="' + basePath + 'why-choose/">Why Choose Us</a>' +
-                        '<a href="' + basePath + 'products-clients/">Products &amp; Clients</a>' +
-                        '<a href="' + basePath + 'technology-stack/">Technology Stack</a>' +
-                        '<a href="' + basePath + 'community/">Community</a>' +
-                    '</div>' +
                     '<p class="mb-2">&copy; <span itemprop="copyrightYear">2024</span> <span itemprop="copyrightHolder" itemscope itemtype="https://schema.org/Organization"><span itemprop="name">myDharm Technologies</span></span>. All rights reserved.</p>' +
                     '<p class="mb-0">Tech for Business. Skills for Students.</p>' +
                 '</div>' +
