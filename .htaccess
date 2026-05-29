@@ -1,6 +1,11 @@
 # SEO URL normalization and legacy URL redirects for tech.mydharm.com
 RewriteEngine On
 
+# Redirect legacy duplicate-content pages to their consolidated canonical destinations
+RewriteRule ^products-clients/?$ why-choose/ [R=301,L,NC]
+RewriteRule ^technology-stack/?$ training/ [R=301,L,NC]
+RewriteRule ^community/?$ training/ [R=301,L,NC]
+
 # Keep key section URLs canonical with trailing slash
 RewriteRule ^(about|services|industries|approach|training|contact|why-choose|products-clients|technology-stack|community)$ $1/ [R=301,L,NC]
 

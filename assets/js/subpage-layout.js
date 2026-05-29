@@ -42,7 +42,7 @@
         footerTarget.innerHTML =
             '<footer class="shared-footer text-center" role="contentinfo" itemscope itemtype="https://schema.org/WPFooter">' +
                 '<div class="container">' +
-                    '<p class="mb-2">&copy; <span itemprop="copyrightYear">2024</span> <span itemprop="copyrightHolder" itemscope itemtype="https://schema.org/Organization"><span itemprop="name">myDharm Technologies</span></span>. All rights reserved.</p>' +
+                    '<p class="mb-2">&copy; <span itemprop="copyrightYear">2026</span> <span itemprop="copyrightHolder" itemscope itemtype="https://schema.org/Organization"><span itemprop="name">myDharm Technologies</span></span>. All rights reserved.</p>' +
                     '<p class="mb-0">Tech for Business. Skills for Students.</p>' +
                 '</div>' +
             '</footer>';

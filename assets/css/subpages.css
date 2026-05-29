@@ -159,6 +159,14 @@ body {
     background: rgba(99, 102, 241, 0.1);
     color: var(--text-secondary);
     font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.hero-home-pill:hover {
+    color: var(--primary-color);
+    border-color: rgba(99, 102, 241, 0.6);
+    background: rgba(99, 102, 241, 0.16);
 }
 
 .section-title {
