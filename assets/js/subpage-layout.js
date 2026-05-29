@@ -1,7 +1,7 @@
 (function () {
     const body = document.body;
     const activeNav = body.dataset.activeNav || "";
-    const basePath = body.dataset.basePath || "../";
+    const basePath = body.dataset.basePath ?? "../";
 
     const navItems = [
         { key: "home", label: "Home", href: "" },

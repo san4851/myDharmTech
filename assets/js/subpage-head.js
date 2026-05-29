@@ -1,6 +1,6 @@
 (function () {
     const script = document.currentScript;
-    const basePath = script?.dataset.basePath || "../";
+    const basePath = script?.dataset.basePath ?? "../";
     const includeIcons = script?.dataset.icons === "true";
 
     const links = [
