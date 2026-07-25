@@ -7,22 +7,39 @@ import xml.etree.ElementTree as ET
 
 
 ADB_PATH = "/home/santneel/Downloads/platform-tools-latest-linux/platform-tools/adb"
+
+# Wi-Fi (wireless) ADB debugging
+# Set WIFI_DEBUG = True and fill in DEVICE_IP when using wireless debugging instead of USB.
+WIFI_DEBUG = True
+DEVICE_IP = "192.168.31.50"  # IP address shown in phone's Wi-Fi debugging screen
+DEVICE_PORT = 39353            # Port shown in phone's Wi-Fi debugging screen (default: 5555)
+
+# Base adb command; automatically targets the Wi-Fi device when WIFI_DEBUG is enabled.
+ADB_BASE = [ADB_PATH, "-s", f"{DEVICE_IP}:{DEVICE_PORT}"] if WIFI_DEBUG else [ADB_PATH]
+
 SMS_COMPONENT = "com.microsoft.android.smsorganizer/.NewMessageActivity"
 PREFERRED_SIM_LABEL = "2"
+DEFAULT_SIM = 1  # Set to 1 to skip SIM selection and send via SIM 1 directly; set to 2 to select SIM 2 before sending.
 SIM_SWITCH_RETRIES = 3
 SEND_TAP_RETRIES = 3
 SET_DEFAULT_MESSAGE = True
 DEFAULT_MESSAGE = (
-    "राष्ट्रीय स्वयं सेवक संघ खंड नाथद्वारा\n\n"
-    "सभी स्वयंसेवक ओर कार्यकर्ता इस लिंक का उपयोग कर दी गई जानकारी गूगल फॉर्म के माध्ययम् से पूर्ण करे ।\n\n"
-    "हर शाखा प्रत्येक स्वयंसेवक से  भरने का आग्रह करे ।\n\n"
-    "https://bit.ly/rss-data-update"
+    "🚩 राष्ट्रीय स्वयंसेवक संघ – नाथद्वारा नगर\n"
+    "गुरु दक्षिणा उत्सव\n"
+    "🗓️ 26 जुलाई 2026 (रविवार)\n"
+    "🕗 रात्रि 8:00 बजे\n"
+    "📍 संघ कार्यालय, प्रथम तल, दिल्ली बाजार, नाथद्वारा\n"
+    "पूर्ण गणवेश में आएँ तथा 10 मिनट पूर्व उपस्थित होकर अपना स्थान ग्रहण करें।\n"
+    # "राष्ट्रीय स्वयं सेवक संघ खंड नाथद्वारा\n\n"
+    # "सभी स्वयंसेवक ओर कार्यकर्ता इस लिंक का उपयोग कर दी गई जानकारी गूगल फॉर्म के माध्ययम् से पूर्ण करे ।\n\n"
+    # "हर शाखा प्रत्येक स्वयंसेवक से  भरने का आग्रह करे ।\n\n"
+    # "https://bit.ly/rss-data-update"
 )
 
 
 def run_adb_shell(command):
     return subprocess.run(
-        [ADB_PATH, "shell", command],
+        [*ADB_BASE, "shell", command],
         capture_output=True,
         text=True,
         timeout=15,
@@ -31,7 +48,7 @@ def run_adb_shell(command):
 
 def dump_ui_xml():
     result = subprocess.run(
-        [ADB_PATH, "exec-out", "uiautomator", "dump", "/dev/tty"],
+        [*ADB_BASE, "exec-out", "uiautomator", "dump", "/dev/tty"],
         capture_output=True,
         text=True,
         timeout=15,
@@ -192,11 +209,14 @@ def send_sms(phone, message):
         print(f"Opened SMS Organizer compose screen for {phone}")
         time.sleep(1.5)
 
-        sim_ok, sim_details = ensure_preferred_sim()
-        if sim_ok:
-            print(f"SIM selection: {sim_details}")
+        if DEFAULT_SIM == 1:
+            print("SIM selection skipped: using SIM 1 (default)")
         else:
-            print(f"SIM selection warning: {sim_details}")
+            sim_ok, sim_details = ensure_preferred_sim()
+            if sim_ok:
+                print(f"SIM selection: {sim_details}")
+            else:
+                print(f"SIM selection warning: {sim_details}")
 
         sent, details = tap_send_button()
         if sent:
@@ -210,7 +230,29 @@ def send_sms(phone, message):
 
     time.sleep(2.5)
 
+def connect_wifi_device():
+    """Connect to the device over Wi-Fi ADB. Called once before sending starts."""
+    target = f"{DEVICE_IP}:{DEVICE_PORT}"
+    result = subprocess.run(
+        [ADB_PATH, "connect", target],
+        capture_output=True,
+        text=True,
+        timeout=10,
+    )
+    output = (result.stdout + result.stderr).strip()
+    if "connected" in output.lower():
+        print(f"Wi-Fi ADB connected: {output}")
+        return True
+    print(f"Wi-Fi ADB connection failed: {output}")
+    return False
+
+
 def main():
+    if WIFI_DEBUG:
+        if not connect_wifi_device():
+            print("Aborting: could not connect to device over Wi-Fi ADB.")
+            return
+
     with open('contacts.csv', newline='') as file:
         reader = csv.DictReader(file)
         for row in reader:
