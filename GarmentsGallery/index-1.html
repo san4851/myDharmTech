@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Garments Gallery — Luxury fashion showroom featuring premium ethnic and contemporary wear.">
+  <title>Garments Gallery | Luxe Collection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/theme.css" rel="stylesheet">
+  <link href="css/variant-1.css" rel="stylesheet">
+</head>
+<body class="variant-1">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg gg-navbar sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index-1.html">Garments<span class="text-primary-gg">Gallery</span></a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-list fs-4" style="color: var(--gg-text);"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navMain">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#collections">Collections</a></li>
+          <li class="nav-item"><a class="nav-link" href="#featured">Featured</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-3">
+          <button class="theme-toggle" aria-label="Toggle theme">
+            <i class="bi bi-moon-fill icon-moon"></i>
+            <i class="bi bi-sun-fill icon-sun"></i>
+          </button>
+          <a href="#contact" class="btn btn-gg-primary d-none d-lg-inline-block">Visit Showroom</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="home" class="hero-minimal">
+    <div class="hero-content animate-fade-up">
+      <span class="hero-tag">Spring / Summer 2026</span>
+      <h1>Where Elegance Meets Craftsmanship</h1>
+      <p>Discover curated collections of premium garments — from timeless ethnic wear to contemporary fashion, handpicked for the discerning wardrobe.</p>
+      <div class="d-flex flex-wrap gap-3 justify-content-center">
+        <a href="#collections" class="btn btn-gg-primary">Explore Collection</a>
+        <a href="#contact" class="btn btn-gg-outline" style="border-color:#fff;color:#fff;">Book Appointment</a>
+      </div>
+    </div>
+    <div class="scroll-indicator">Scroll <i class="bi bi-chevron-down"></i></div>
+  </section>
+
+  <!-- Categories -->
+  <section class="gg-section bg-surface">
+    <div class="container text-center">
+      <h2 class="gg-section-title">Shop by Category</h2>
+      <p class="gg-section-subtitle mx-auto mb-4">Browse our showroom sections tailored to every occasion and style preference.</p>
+      <div class="d-flex flex-wrap justify-content-center">
+        <a href="#" class="category-pill active"><i class="bi bi-stars"></i> All</a>
+        <a href="#" class="category-pill"><i class="bi bi-gem"></i> Bridal</a>
+        <a href="#" class="category-pill"><i class="bi bi-sun"></i> Ethnic</a>
+        <a href="#" class="category-pill"><i class="bi bi-briefcase"></i> Formal</a>
+        <a href="#" class="category-pill"><i class="bi bi-flower1"></i> Casual</a>
+        <a href="#" class="category-pill"><i class="bi bi-snow"></i> Winter</a>
+        <a href="#" class="category-pill"><i class="bi bi-heart"></i> Kids</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Collections -->
+  <section id="collections" class="gg-section">
+    <div class="container">
+      <div class="row align-items-end mb-5">
+        <div class="col-lg-7">
+          <h2 class="gg-section-title">New Arrivals</h2>
+          <p class="gg-section-subtitle">Fresh pieces just arrived at our showroom — limited editions and exclusive designer collaborations.</p>
+        </div>
+        <div class="col-lg-5 text-lg-end mt-3 mt-lg-0">
+          <a href="#" class="btn btn-gg-outline">View All <i class="bi bi-arrow-right ms-1"></i></a>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-sm-6 col-lg-3">
+          <div class="gg-card">
+            <span class="gg-badge position-absolute m-3">New</span>
+            <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&q=80" alt="Silk Anarkali" class="gg-card-img">
+            <div class="gg-card-body">
+              <h3 class="gg-card-title">Silk Anarkali</h3>
+              <p class="text-muted-gg small mb-2">Hand-embroidered zari work</p>
+              <span class="gg-card-price">₹12,499</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="gg-card">
+            <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&q=80" alt="Designer Lehenga" class="gg-card-img">
+            <div class="gg-card-body">
+              <h3 class="gg-card-title">Designer Lehenga</h3>
+              <p class="text-muted-gg small mb-2">Bridal collection 2026</p>
+              <span class="gg-card-price">₹45,999</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="gg-card">
+            <span class="gg-badge position-absolute m-3">Sale</span>
+            <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600&q=80" alt="Linen Kurta Set" class="gg-card-img">
+            <div class="gg-card-body">
+              <h3 class="gg-card-title">Linen Kurta Set</h3>
+              <p class="text-muted-gg small mb-2">Breathable summer wear</p>
+              <span class="gg-card-price">₹3,299 <s class="text-muted-gg small">₹4,499</s></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="gg-card">
+            <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&q=80" alt="Indo-Western Gown" class="gg-card-img">
+            <div class="gg-card-body">
+              <h3 class="gg-card-title">Indo-Western Gown</h3>
+              <p class="text-muted-gg small mb-2">Evening wear elegance</p>
+              <span class="gg-card-price">₹18,750</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Carousel -->
+  <section id="featured" class="gg-section bg-alt">
+    <div class="container">
+      <h2 class="gg-section-title text-center mb-5">Featured Collections</h2>
+      <div id="featuredCarousel" class="carousel slide featured-carousel" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="gg-card featured-card">
+                  <img src="https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600&q=80" alt="Royal Heritage" class="gg-card-img">
+                  <div class="overlay-text">
+                    <h4 class="font-display">Royal Heritage</h4>
+                    <p class="small mb-0 opacity-75">Banarasi silk &amp; brocade</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="gg-card featured-card">
+                  <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&q=80" alt="Modern Minimal" class="gg-card-img">
+                  <div class="overlay-text">
+                    <h4 class="font-display">Modern Minimal</h4>
+                    <p class="small mb-0 opacity-75">Clean lines, pure fabrics</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="gg-card featured-card">
+                  <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80" alt="Festive Glow" class="gg-card-img">
+                  <div class="overlay-text">
+                    <h4 class="font-display">Festive Glow</h4>
+                    <p class="small mb-0 opacity-75">Celebration-ready ensembles</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="gg-card featured-card">
+                  <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=80" alt="Artisan Weaves" class="gg-card-img">
+                  <div class="overlay-text">
+                    <h4 class="font-display">Artisan Weaves</h4>
+                    <p class="small mb-0 opacity-75">Handloom masterpieces</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="gg-card featured-card">
+                  <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Office Chic" class="gg-card-img">
+                  <div class="overlay-text">
+                    <h4 class="font-display">Office Chic</h4>
+                    <p class="small mb-0 opacity-75">Power dressing redefined</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="gg-card featured-card">
+                  <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600&q=80" alt="Bridal Dreams" class="gg-card-img">
+                  <div class="overlay-text">
+                    <h4 class="font-display">Bridal Dreams</h4>
+                    <p class="small mb-0 opacity-75">Your perfect wedding look</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats-bar">
+    <div class="container">
+      <div class="row text-center g-4">
+        <div class="col-6 col-md-3">
+          <div class="stat-item">
+            <h3>15+</h3>
+            <p>Years Experience</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-item">
+            <h3>50+</h3>
+            <p>Designer Brands</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-item">
+            <h3>10K+</h3>
+            <p>Happy Clients</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-item">
+            <h3>3</h3>
+            <p>Showroom Locations</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About & Testimonials -->
+  <section id="about" class="gg-section">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800&q=80" alt="Our Showroom" class="img-fluid gg-card" style="border-radius:0;">
+        </div>
+        <div class="col-lg-6">
+          <h2 class="gg-section-title">Our Showroom Story</h2>
+          <p class="text-muted-gg mb-4">Founded in 2010, Garments Gallery has been the destination for fashion-forward individuals seeking quality, authenticity, and personalized styling. Our showroom experience goes beyond shopping — it's a journey through India's rich textile heritage and global fashion trends.</p>
+          <p class="text-muted-gg mb-4">Every piece in our collection is carefully selected by our expert stylists, ensuring you find garments that reflect your unique personality and occasion.</p>
+          <a href="#contact" class="btn btn-gg-primary">Schedule a Visit</a>
+        </div>
+      </div>
+      <div class="row mt-5 g-4">
+        <div class="col-md-6">
+          <div class="gg-card testimonial-card h-100">
+            <blockquote>"The bridal collection here is unmatched. The staff helped me find my dream lehenga with such patience and expertise."</blockquote>
+            <div class="d-flex align-items-center gap-3">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Priya S." class="rounded-circle" width="48" height="48" style="object-fit:cover;">
+              <div>
+                <strong>Priya Sharma</strong>
+                <p class="text-muted-gg small mb-0">Bride, Mumbai</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="gg-card testimonial-card h-100">
+            <blockquote>"I visit every season for their ethnic collection. Quality fabrics, fair prices, and a showroom that feels like a boutique hotel."</blockquote>
+            <div class="d-flex align-items-center gap-3">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Rahul M." class="rounded-circle" width="48" height="48" style="object-fit:cover;">
+              <div>
+                <strong>Rahul Mehta</strong>
+                <p class="text-muted-gg small mb-0">Regular Client, Delhi</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Experience Luxury In Person</h2>
+      <p>Book a private styling session at our flagship showroom. Complimentary for bridal consultations.</p>
+      <a href="#contact" class="btn btn-gg-outline">Book Now</a>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="gg-section bg-surface">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-5">
+          <h2 class="gg-section-title">Visit Us</h2>
+          <p class="text-muted-gg mb-4">Walk into our showroom or schedule an appointment for a personalized experience.</p>
+          <ul class="list-unstyled text-muted-gg">
+            <li class="mb-3"><i class="bi bi-geo-alt text-primary-gg me-2"></i> 42 Fashion Street, Connaught Place, New Delhi 110001</li>
+            <li class="mb-3"><i class="bi bi-telephone text-primary-gg me-2"></i> +91 98765 43210</li>
+            <li class="mb-3"><i class="bi bi-envelope text-primary-gg me-2"></i> hello@garmentsgallery.com</li>
+            <li class="mb-3"><i class="bi bi-clock text-primary-gg me-2"></i> Mon–Sat: 10 AM – 8 PM | Sun: 11 AM – 6 PM</li>
+          </ul>
+        </div>
+        <div class="col-lg-7">
+          <form class="row g-3">
+            <div class="col-md-6">
+              <input type="text" class="form-control" placeholder="Your Name" style="background:var(--gg-bg);border-color:var(--gg-border);color:var(--gg-text);border-radius:0;padding:0.85rem;">
+            </div>
+            <div class="col-md-6">
+              <input type="email" class="form-control" placeholder="Email Address" style="background:var(--gg-bg);border-color:var(--gg-border);color:var(--gg-text);border-radius:0;padding:0.85rem;">
+            </div>
+            <div class="col-12">
+              <input type="tel" class="form-control" placeholder="Phone Number" style="background:var(--gg-bg);border-color:var(--gg-border);color:var(--gg-text);border-radius:0;padding:0.85rem;">
+            </div>
+            <div class="col-12">
+              <textarea class="form-control" rows="4" placeholder="Tell us about your visit or styling needs..." style="background:var(--gg-bg);border-color:var(--gg-border);color:var(--gg-text);border-radius:0;"></textarea>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-gg-primary">Send Message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="gg-footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h5 class="font-display">Garments<span class="text-primary-gg">Gallery</span></h5>
+          <p class="text-muted-gg">Premium fashion showroom bringing together the finest garments from across India and the world.</p>
+          <div class="gg-social mt-3">
+            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" aria-label="Pinterest"><i class="bi bi-pinterest"></i></a>
+            <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+          </div>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h5>Shop</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#">New Arrivals</a></li>
+            <li class="mb-2"><a href="#">Bridal</a></li>
+            <li class="mb-2"><a href="#">Ethnic Wear</a></li>
+            <li class="mb-2"><a href="#">Formal</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h5>Company</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#">About Us</a></li>
+            <li class="mb-2"><a href="#">Careers</a></li>
+            <li class="mb-2"><a href="#">Press</a></li>
+            <li class="mb-2"><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h5>Newsletter</h5>
+          <p class="text-muted-gg small">Get updates on new collections and exclusive offers.</p>
+          <div class="input-group">
+            <input type="email" class="form-control" placeholder="Email" style="background:var(--gg-bg);border-color:var(--gg-border);color:var(--gg-text);border-radius:0;">
+            <button class="btn btn-gg-primary" type="button">Join</button>
+          </div>
+        </div>
+      </div>
+      <div class="gg-footer-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <span>&copy; 2026 Garments Gallery. All rights reserved.</span>
+        <span>
+          <a href="#" class="me-3">Privacy</a>
+          <a href="#">Terms</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Variant Switcher -->
+  <div class="variant-switcher d-none d-md-block">
+    <a href="index-1.html" class="active">Luxe</a>
+    <a href="index-2.html">Editorial</a>
+    <a href="index-3.html">Canvas</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/theme.js"></script>
+</body>
+</html>

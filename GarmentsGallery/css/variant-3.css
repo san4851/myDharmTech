@@ -1,0 +1,297 @@
+/* Variant 3 — Canvas Gallery */
+
+.variant-3 .hero-gallery {
+  display: flex;
+  align-items: stretch;
+  background: var(--gg-bg-alt);
+  margin-top: -1px;
+}
+
+@media (max-width: 991.98px) {
+  .variant-3 .hero-gallery { flex-direction: column; }
+}
+
+.variant-3 .hero-sidebar {
+  width: 380px;
+  flex-shrink: 0;
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--gg-surface);
+  border-right: 1px solid var(--gg-border);
+}
+
+@media (max-width: 991.98px) {
+  .variant-3 .hero-sidebar {
+    width: 100%;
+    padding: 2.5rem 1.5rem;
+    border-right: none;
+    border-bottom: 1px solid var(--gg-border);
+  }
+}
+
+.variant-3 .hero-sidebar .season-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gg-accent);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.variant-3 .hero-sidebar h1 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.variant-3 .hero-sidebar p {
+  color: var(--gg-text-muted);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.variant-3 .hero-mosaic {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 4px;
+  min-height: 85vh;
+}
+
+@media (max-width: 991.98px) {
+  .variant-3 .hero-mosaic { min-height: 50vh; }
+}
+
+@media (max-width: 575.98px) {
+  .variant-3 .hero-mosaic { grid-template-columns: 1fr 1fr; }
+}
+
+.variant-3 .hero-mosaic .mosaic-cell {
+  overflow: hidden;
+  position: relative;
+}
+
+.variant-3 .hero-mosaic .mosaic-cell:nth-child(1) { grid-row: span 2; }
+.variant-3 .hero-mosaic .mosaic-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.variant-3 .hero-mosaic .mosaic-cell:hover img { transform: scale(1.06); }
+
+.variant-3 .filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--gg-border);
+  margin-bottom: 2rem;
+}
+
+.variant-3 .filter-btn {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--gg-border);
+  background: transparent;
+  color: var(--gg-text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.variant-3 .filter-btn:hover,
+.variant-3 .filter-btn.active {
+  border-color: var(--gg-primary);
+  color: var(--gg-primary);
+  background: rgba(var(--gg-primary-rgb), 0.08);
+}
+
+.variant-3 .gallery-masonry {
+  columns: 4;
+  column-gap: 1rem;
+}
+
+@media (max-width: 1199.98px) { .variant-3 .gallery-masonry { columns: 3; } }
+@media (max-width: 767.98px) { .variant-3 .gallery-masonry { columns: 2; } }
+@media (max-width: 479.98px) { .variant-3 .gallery-masonry { columns: 1; } }
+
+.variant-3 .gallery-item {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.variant-3 .gallery-item img {
+  width: 100%;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.variant-3 .gallery-item:hover img { transform: scale(1.04); }
+
+.variant-3 .gallery-item .item-info {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.25rem;
+  background: linear-gradient(transparent 50%, rgba(0,0,0,0.75));
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.variant-3 .gallery-item:hover .item-info { opacity: 1; }
+
+.variant-3 .gallery-item .item-info h4 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.1rem;
+  margin-bottom: 0.15rem;
+}
+
+.variant-3 .gallery-item .item-info span {
+  font-size: 0.85rem;
+  color: var(--gg-primary);
+}
+
+.variant-3 .showroom-card {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  background: var(--gg-surface);
+  border: 1px solid var(--gg-border);
+  padding: 2rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.variant-3 .showroom-card:hover { box-shadow: var(--gg-shadow-lg); }
+
+@media (max-width: 767.98px) {
+  .variant-3 .showroom-card { flex-direction: column; text-align: center; }
+}
+
+.variant-3 .showroom-card .icon-wrap {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--gg-primary-rgb), 0.12);
+  color: var(--gg-primary);
+  font-size: 1.5rem;
+}
+
+.variant-3 .video-section {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+}
+
+@media (max-width: 767.98px) {
+  .variant-3 .video-section { height: 300px; }
+}
+
+.variant-3 .video-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.variant-3 .video-section .play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.95);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--gg-accent);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+.variant-3 .video-section .play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.variant-3 .video-section .video-caption {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  color: #fff;
+}
+
+.variant-3 .video-section .video-caption h3 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.5rem;
+}
+
+.variant-3 .brand-logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 2rem 0;
+  opacity: 0.5;
+}
+
+.variant-3 .brand-logos span {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--gg-text-muted);
+}
+
+.variant-3 .appointment-cta {
+  background: var(--gg-surface);
+  border: 2px solid var(--gg-primary);
+  padding: 3rem;
+  text-align: center;
+}
+
+.variant-3 .variant-switcher {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1050;
+  background: var(--gg-surface);
+  border: 1px solid var(--gg-border);
+  padding: 0.5rem;
+  box-shadow: var(--gg-shadow-lg);
+}
+
+.variant-3 .variant-switcher a {
+  display: block;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--gg-text-muted);
+  text-decoration: none;
+}
+
+.variant-3 .variant-switcher a:hover,
+.variant-3 .variant-switcher a.active {
+  color: var(--gg-primary);
+  background: rgba(var(--gg-primary-rgb), 0.1);
+}

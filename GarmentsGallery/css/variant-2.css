@@ -1,0 +1,282 @@
+/* Variant 2 — Editorial Bold */
+
+.variant-2 .hero-editorial {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  margin-top: -1px;
+}
+
+@media (max-width: 991.98px) {
+  .variant-2 .hero-editorial {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+}
+
+.variant-2 .hero-text-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 3rem;
+  background: var(--gg-surface);
+  position: relative;
+}
+
+.variant-2 .hero-text-side::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 10%;
+  bottom: 10%;
+  width: 1px;
+  background: var(--gg-border);
+}
+
+@media (max-width: 991.98px) {
+  .variant-2 .hero-text-side::after { display: none; }
+  .variant-2 .hero-text-side { padding: 3rem 1.5rem; order: 2; }
+}
+
+.variant-2 .hero-text-side .edition {
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gg-accent);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.variant-2 .hero-text-side h1 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  font-weight: 900;
+  line-height: 0.95;
+  margin-bottom: 1.5rem;
+}
+
+.variant-2 .hero-text-side h1 span {
+  display: block;
+  color: var(--gg-primary);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.variant-2 .hero-image-side {
+  position: relative;
+  overflow: hidden;
+  min-height: 50vh;
+}
+
+@media (min-width: 992px) {
+  .variant-2 .hero-image-side { min-height: auto; }
+}
+
+.variant-2 .hero-image-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+
+.variant-2 .hero-image-side .floating-tag {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  background: var(--gg-accent);
+  color: #fff;
+  padding: 1rem 1.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.variant-2 .marquee-strip {
+  background: var(--gg-text);
+  color: var(--gg-bg);
+  padding: 0.75rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+[data-bs-theme="dark"] .variant-2 .marquee-strip {
+  background: var(--gg-primary);
+  color: #1a1a1a;
+}
+
+.variant-2 .marquee-content {
+  display: inline-block;
+  animation: marquee 25s linear infinite;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.variant-2 .lookbook-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+}
+
+.variant-2 .lookbook-item {
+  overflow: hidden;
+  position: relative;
+}
+
+.variant-2 .lookbook-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.variant-2 .lookbook-item:hover img {
+  transform: scale(1.05);
+}
+
+.variant-2 .lookbook-item:nth-child(1) { grid-column: span 7; grid-row: span 2; min-height: 400px; }
+.variant-2 .lookbook-item:nth-child(2) { grid-column: span 5; min-height: 195px; }
+.variant-2 .lookbook-item:nth-child(3) { grid-column: span 5; min-height: 195px; }
+.variant-2 .lookbook-item:nth-child(4) { grid-column: span 4; min-height: 280px; }
+.variant-2 .lookbook-item:nth-child(5) { grid-column: span 4; min-height: 280px; }
+.variant-2 .lookbook-item:nth-child(6) { grid-column: span 4; min-height: 280px; }
+
+@media (max-width: 767.98px) {
+  .variant-2 .lookbook-item { grid-column: span 12 !important; min-height: 250px !important; }
+}
+
+.variant-2 .lookbook-item .item-label {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background: var(--gg-overlay);
+  backdrop-filter: blur(8px);
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.variant-2 .category-showcase {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.variant-2 .category-showcase::-webkit-scrollbar { display: none; }
+
+.variant-2 .category-tile {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+  position: relative;
+  height: 380px;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .variant-2 .category-tile { flex: 1; }
+}
+
+.variant-2 .category-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.variant-2 .category-tile:hover img { transform: scale(1.08); }
+
+.variant-2 .category-tile .tile-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  background: linear-gradient(transparent 40%, rgba(0,0,0,0.7));
+  color: #fff;
+}
+
+.variant-2 .category-tile h3 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.variant-2 .newsletter-box {
+  background: var(--gg-bg-alt);
+  border: 1px solid var(--gg-border);
+  padding: 3rem;
+}
+
+.variant-2 .newsletter-box .form-control {
+  background: var(--gg-surface);
+  border: 1px solid var(--gg-border);
+  color: var(--gg-text);
+  border-radius: 0;
+  padding: 0.85rem 1.25rem;
+}
+
+.variant-2 .newsletter-box .form-control:focus {
+  border-color: var(--gg-primary);
+  box-shadow: 0 0 0 0.2rem rgba(var(--gg-primary-rgb), 0.2);
+}
+
+.variant-2 .quote-block {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.4;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  padding: 2rem 0;
+}
+
+.variant-2 .quote-block::before {
+  content: '"';
+  font-size: 6rem;
+  color: var(--gg-primary);
+  opacity: 0.3;
+  position: absolute;
+  top: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 1;
+}
+
+.variant-2 .variant-switcher {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1050;
+  background: var(--gg-surface);
+  border: 1px solid var(--gg-border);
+  padding: 0.5rem;
+  box-shadow: var(--gg-shadow-lg);
+}
+
+.variant-2 .variant-switcher a {
+  display: block;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--gg-text-muted);
+  text-decoration: none;
+}
+
+.variant-2 .variant-switcher a:hover,
+.variant-2 .variant-switcher a.active {
+  color: var(--gg-primary);
+  background: rgba(var(--gg-primary-rgb), 0.1);
+}

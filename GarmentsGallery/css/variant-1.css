@@ -1,0 +1,196 @@
+/* Variant 1 — Luxe Minimal */
+
+.variant-1 .hero-minimal {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url('https://images.unsplash.com/photo-1558171813-4c088753af8f?w=1920&q=80') center/cover no-repeat;
+  margin-top: -1px;
+}
+
+.variant-1 .hero-minimal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gg-hero-overlay);
+}
+
+.variant-1 .hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  padding: 2rem;
+  max-width: 800px;
+}
+
+.variant-1 .hero-content .hero-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+.variant-1 .hero-content h1 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.variant-1 .hero-content p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+  line-height: 1.7;
+}
+
+.variant-1 .scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+.variant-1 .category-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  border: 1px solid var(--gg-border);
+  background: var(--gg-surface);
+  color: var(--gg-text);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin: 0.25rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.variant-1 .category-pill:hover,
+.variant-1 .category-pill.active {
+  border-color: var(--gg-primary);
+  background: rgba(var(--gg-primary-rgb), 0.1);
+  color: var(--gg-primary);
+}
+
+.variant-1 .featured-carousel .carousel-item {
+  padding: 0 0.5rem;
+}
+
+.variant-1 .featured-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.variant-1 .featured-card .overlay-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem;
+  background: linear-gradient(transparent, rgba(0,0,0,0.75));
+  color: #fff;
+}
+
+.variant-1 .stats-bar {
+  background: var(--gg-surface);
+  border: 1px solid var(--gg-border);
+  padding: 2.5rem 0;
+}
+
+.variant-1 .stat-item h3 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2.5rem;
+  color: var(--gg-primary);
+  margin-bottom: 0.25rem;
+}
+
+.variant-1 .stat-item p {
+  color: var(--gg-text-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+.variant-1 .testimonial-card {
+  padding: 2rem;
+  border-left: 3px solid var(--gg-primary);
+}
+
+.variant-1 .testimonial-card blockquote {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.variant-1 .cta-banner {
+  background: var(--gg-gradient);
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.variant-1 .cta-banner h2 {
+  font-family: "Playfair Display", Georgia, serif;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+}
+
+.variant-1 .cta-banner p {
+  color: rgba(26, 26, 26, 0.75);
+  margin-bottom: 1.5rem;
+}
+
+.variant-1 .cta-banner .btn-gg-outline {
+  border-color: #1a1a1a;
+  color: #1a1a1a;
+}
+
+.variant-1 .cta-banner .btn-gg-outline:hover {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.variant-1 .variant-switcher {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1050;
+  background: var(--gg-surface);
+  border: 1px solid var(--gg-border);
+  padding: 0.5rem;
+  box-shadow: var(--gg-shadow-lg);
+}
+
+.variant-1 .variant-switcher a {
+  display: block;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--gg-text-muted);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.variant-1 .variant-switcher a:hover,
+.variant-1 .variant-switcher a.active {
+  color: var(--gg-primary);
+  background: rgba(var(--gg-primary-rgb), 0.1);
+}
