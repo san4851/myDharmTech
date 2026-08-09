@@ -1,0 +1,16 @@
+# WordPress uploads
+wp-content/uploads/
+
+# WordPress cache
+wp-content/cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+
+# Install script (run once)
+install-wp.php

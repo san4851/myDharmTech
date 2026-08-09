@@ -1,0 +1,431 @@
+:root {
+  --alt-bg: #f4efe5;
+  --alt-surface: #fffdf8;
+  --alt-surface-soft: #efe7d7;
+  --alt-ink: #202f24;
+  --alt-muted: #5d6c61;
+  --alt-green: #2f6841;
+  --alt-green-deep: #1d4c30;
+  --alt-gold: #a78638;
+  --alt-border: rgba(32, 47, 36, 0.1);
+  --alt-shadow: 0 24px 60px rgba(35, 44, 29, 0.12);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Outfit", "Segoe UI", sans-serif;
+  color: var(--alt-ink);
+  background:
+    radial-gradient(circle at 10% 10%, rgba(167, 134, 56, 0.18), transparent 24%),
+    linear-gradient(180deg, #f7f1e6 0%, #f2eee5 38%, #fbf9f4 100%);
+}
+
+img {
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.navbar,
+.hero-alt,
+.section-alt,
+.footer-alt {
+  position: relative;
+  z-index: 1;
+}
+
+.navbar-nav .nav-link {
+  font-weight: 600;
+  color: var(--alt-ink);
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus,
+.footer-link-alt:hover,
+.footer-link-alt:focus {
+  color: var(--alt-green);
+}
+
+.brand-badge {
+  width: 4rem;
+  height: 4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 12px 26px rgba(47, 104, 65, 0.12);
+}
+
+.brand-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-title {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.55rem;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.brand-subtitle {
+  display: inline-block;
+  margin-top: 0.15rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--alt-gold);
+}
+
+.eyebrow-alt {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--alt-green-deep);
+  background: rgba(47, 104, 65, 0.08);
+}
+
+.hero-alt {
+  padding: 3rem 0 5.5rem;
+}
+
+.hero-alt-shell {
+  padding: 3rem;
+  border-radius: 2rem;
+  background:
+    linear-gradient(135deg, rgba(255, 253, 248, 0.92), rgba(239, 231, 215, 0.98)),
+    var(--alt-surface);
+  border: 1px solid rgba(167, 134, 56, 0.18);
+  box-shadow: var(--alt-shadow);
+}
+
+.hero-alt h1,
+.hero-alt h2,
+.section-intro h2,
+.section-alt h2,
+.consult-card h3,
+.approach-card h3,
+.schedule-card h3 {
+  font-family: "Fraunces", Georgia, serif;
+}
+
+.hero-alt h1 {
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  line-height: 0.96;
+  margin: 1.1rem 0 1.2rem;
+}
+
+.hero-copy {
+  font-size: 1.06rem;
+  line-height: 1.8;
+  color: var(--alt-muted);
+  max-width: 40rem;
+}
+
+.hero-cta {
+  margin: 2rem 0;
+}
+
+.btn-dark-brand {
+  color: #fff;
+  background: linear-gradient(135deg, var(--alt-green-deep), var(--alt-green));
+  border: 1px solid transparent;
+  box-shadow: 0 16px 30px rgba(47, 104, 65, 0.16);
+}
+
+.btn-dark-brand:hover,
+.btn-dark-brand:focus {
+  color: #fff;
+  background: linear-gradient(135deg, #163b24, #3a744c);
+}
+
+.btn-outline-soft {
+  color: var(--alt-green-deep);
+  border: 1px solid rgba(47, 104, 65, 0.18);
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.hero-stat-row {
+  margin-top: 0.5rem;
+}
+
+.hero-stat,
+.consult-card,
+.approach-card,
+.highlight-card,
+.schedule-card,
+.booking-shell {
+  height: 100%;
+  padding: 1.35rem;
+  border-radius: 1.4rem;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid var(--alt-border);
+  box-shadow: 0 16px 34px rgba(38, 49, 31, 0.08);
+}
+
+.hero-stat strong {
+  display: block;
+  font-size: 1.25rem;
+  color: var(--alt-green-deep);
+}
+
+.hero-stat span,
+.consult-card p,
+.approach-card p,
+.highlight-card p,
+.schedule-card li {
+  color: var(--alt-muted);
+}
+
+.hero-alt-panel {
+  padding: 1.75rem;
+  border-radius: 1.8rem;
+  background: linear-gradient(180deg, #244f34, #163d26);
+  color: #fff;
+  box-shadow: 0 24px 44px rgba(22, 61, 38, 0.22);
+}
+
+.hero-panel-top {
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: 1.25rem;
+}
+
+.panel-kicker {
+  margin-bottom: 0.45rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d9c793;
+}
+
+.hero-panel-top h2 {
+  font-size: clamp(2rem, 3vw, 2.9rem);
+  margin-bottom: 0.2rem;
+}
+
+.panel-meta {
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.hero-panel-section {
+  margin-bottom: 1.25rem;
+}
+
+.topic-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.topic-pills span {
+  padding: 0.55rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-panel-note {
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.hero-panel-note p {
+  margin: 0;
+  font-weight: 600;
+  color: #fff3cf;
+}
+
+.section-alt {
+  padding: 5.5rem 0;
+}
+
+.section-tinted {
+  background: linear-gradient(180deg, rgba(239, 231, 215, 0.48), rgba(255, 255, 255, 0.5));
+}
+
+.section-appointment {
+  background: linear-gradient(180deg, rgba(36, 79, 52, 0.06), rgba(167, 134, 56, 0.06));
+}
+
+.section-intro {
+  max-width: 48rem;
+  margin-bottom: 3rem;
+}
+
+.section-intro h2,
+.section-alt h2 {
+  font-size: clamp(2.1rem, 4vw, 3.5rem);
+  margin: 0.9rem 0 0.75rem;
+}
+
+.section-intro p,
+.section-alt p {
+  color: var(--alt-muted);
+}
+
+.consult-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.consult-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -1.4rem -1.4rem auto;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(167, 134, 56, 0.18), transparent 70%);
+}
+
+.consult-card h3,
+.approach-card h3,
+.schedule-card h3,
+.highlight-card h3 {
+  font-size: 1.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.highlight-card {
+  overflow: hidden;
+  padding: 0;
+}
+
+.highlight-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: linear-gradient(180deg, rgba(36, 79, 52, 0.14), rgba(167, 134, 56, 0.18));
+}
+
+.highlight-card figcaption {
+  padding: 1.4rem;
+}
+
+.schedule-card ul {
+  padding-left: 1.1rem;
+}
+
+.booking-shell {
+  padding: 1.75rem;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.form-label {
+  font-weight: 700;
+}
+
+.form-control,
+.form-select {
+  min-height: 3.2rem;
+  border-radius: 1rem;
+  border-color: rgba(32, 47, 36, 0.12);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+textarea.form-control {
+  min-height: auto;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: rgba(47, 104, 65, 0.5);
+  box-shadow: 0 0 0 0.22rem rgba(47, 104, 65, 0.12);
+}
+
+.faq-alt .accordion-item {
+  margin-bottom: 1rem;
+  border: 1px solid var(--alt-border);
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.faq-alt .accordion-button {
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.faq-alt .accordion-button:not(.collapsed) {
+  color: var(--alt-green-deep);
+  background: rgba(47, 104, 65, 0.08);
+  box-shadow: none;
+}
+
+.faq-alt .accordion-button:focus {
+  box-shadow: none;
+}
+
+.footer-alt {
+  border-top: 1px solid rgba(32, 47, 36, 0.08);
+}
+
+.footer-alt p,
+.footer-link-alt {
+  color: var(--alt-muted);
+}
+
+.footer-link-alt {
+  font-weight: 700;
+}
+
+@media (max-width: 991.98px) {
+  .hero-alt-shell {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hero-alt {
+    padding-top: 2rem;
+  }
+
+  .hero-alt-shell {
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+  }
+
+  .hero-alt-panel,
+  .hero-stat,
+  .consult-card,
+  .approach-card,
+  .highlight-card,
+  .schedule-card,
+  .booking-shell {
+    border-radius: 1.15rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .brand-title {
+    font-size: 1.3rem;
+  }
+
+  .hero-alt h1 {
+    font-size: 2.45rem;
+  }
+
+  .section-alt {
+    padding: 4.5rem 0;
+  }
+}
