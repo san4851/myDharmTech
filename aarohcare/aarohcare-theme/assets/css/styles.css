@@ -871,3 +871,205 @@ textarea.form-control {
     color: var(--brand-forest);
   }
 }
+
+
+.consult-topics-section {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 0 0 2.75rem;
+}
+
+.consult-topics-shell {
+  width: 100%;
+  padding: 0 1.15rem;
+}
+
+.consult-topics-box {
+  width: 100%;
+  padding: 1.85rem 1.6rem 2rem;
+  border-radius: 1.8rem;
+  background: linear-gradient(180deg, #244f34, #163d26);
+  color: #fff;
+  box-shadow: 0 24px 44px rgba(22, 61, 38, 0.22);
+}
+
+.consult-topics-box h2 {
+  margin: 0 0 1.1rem;
+  font-family: Manrope, "Segoe UI", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d9c793;
+}
+
+.consult-topics-box .topic-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.consult-topics-box .topic-pills span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  line-height: 1.2;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+@media (max-width: 991.98px) {
+  .consult-topics-shell {
+    padding: 0 0.85rem;
+  }
+
+  .consult-topics-box {
+    padding: 1.5rem 1.2rem 1.65rem;
+    border-radius: 1.35rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .consult-topics-box {
+    border-radius: 1.15rem;
+  }
+
+  .consult-topics-box .topic-pills span {
+    font-size: 0.82rem;
+    padding: 0.48rem 0.75rem;
+  }
+}
+
+
+.article-carousel-section {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 0 0 3rem;
+}
+
+.article-carousel-shell {
+  width: 100%;
+  padding: 0 1.15rem;
+}
+
+.article-carousel-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.15rem;
+}
+
+.article-carousel-head h2 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.article-carousel-head .eyebrow {
+  margin-bottom: 0.45rem;
+}
+
+.article-carousel-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-shrink: 0;
+}
+
+.article-carousel-nav {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.article-carousel-btn {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--brand-border);
+  background: #fff;
+  color: var(--brand-forest);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 18px rgba(35, 64, 52, 0.08);
+  cursor: pointer;
+}
+
+.article-carousel-btn:hover,
+.article-carousel-btn:focus {
+  background: var(--brand-forest);
+  border-color: var(--brand-forest);
+  color: #fff;
+}
+
+.article-carousel-btn:disabled {
+  opacity: 0.38;
+  cursor: default;
+  background: #fff;
+  color: var(--brand-forest);
+}
+
+.article-carousel-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 0.35rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.article-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.article-carousel-slide {
+  flex: 0 0 min(84vw, 20.5rem);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+}
+
+.article-carousel-slide .article-card-media {
+  height: 11.5rem;
+}
+
+.article-carousel-slide .article-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.article-carousel-slide h3 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.4rem;
+  margin: 0 0 0.45rem;
+}
+
+.article-carousel-slide h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.article-carousel-slide h3 a:hover {
+  color: var(--brand-forest);
+}
+
+@media (max-width: 991.98px) {
+  .article-carousel-shell {
+    padding: 0 0.85rem;
+  }
+
+  .article-carousel-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

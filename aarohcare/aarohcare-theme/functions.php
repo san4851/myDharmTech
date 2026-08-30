@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('AAROH_THEME_VERSION', '1.0.3');
+define('AAROH_THEME_VERSION', '1.0.5');
 
 require_once get_template_directory() . '/inc/fields.php';
 require_once get_template_directory() . '/inc/helpers.php';
