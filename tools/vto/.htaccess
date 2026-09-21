@@ -1,3 +1,10 @@
 <FilesMatch "^\.env">
     Require all denied
 </FilesMatch>
+
+# Keep long OpenAI image jobs from being killed with "Request Timeout".
+<IfModule LiteSpeed>
+    RewriteEngine On
+    RewriteRule .* - [E=noabort:1]
+    RewriteRule .* - [E=noconntimeout:1]
+</IfModule>

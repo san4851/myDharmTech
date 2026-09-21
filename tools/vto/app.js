@@ -50,7 +50,11 @@
             data = JSON.parse(text);
         } catch (err) {
             const snippet = text.slice(0, 2000);
-            throw Object.assign(new Error("Server did not return JSON. HTTP " + response.status), {
+            const timedOut = /request timeout|takes too long to process|timed out by the server/i.test(text);
+            const message = timedOut
+                ? "The host timed out while OpenAI was generating the image. Raise LiteSpeed Connection Timeout to 300 seconds, then retry."
+                : "Server did not return JSON. HTTP " + response.status;
+            throw Object.assign(new Error(message), {
                 raw: snippet,
             });
         }

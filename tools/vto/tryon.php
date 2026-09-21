@@ -11,8 +11,9 @@ declare(strict_types=1);
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
-set_time_limit(180);
-ini_set('max_execution_time', '180');
+set_time_limit(300);
+ini_set('max_execution_time', '3000');
+ignore_user_abort(true);
 ini_set('display_errors', '0');
 
 require_once dirname(__DIR__, 2) . '/env_loader.php';
@@ -241,7 +242,7 @@ function vto_openai_edit(string $apiKey, string $model, string $prompt, string $
             'Authorization: Bearer ' . $apiKey,
         ],
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 150,
+        CURLOPT_TIMEOUT => 3000,
     ]);
 
     $raw = curl_exec($ch);
