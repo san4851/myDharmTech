@@ -43,12 +43,28 @@ $vtoDebug = in_array($debugVal, ['1', 'true', 'on', 'yes'], true);
                                 <div class="row g-3 mb-3">
                                     <div class="col-md-6">
                                         <label for="item_image" class="form-label">Item image</label>
-                                        <input class="form-control" type="file" id="item_image" name="item_image" accept="image/jpeg,image/png,image/webp" required>
-                                        <div class="vto-preview" id="itemPreview" aria-live="polite">No item selected</div>
+                                        <p class="small text-secondary-custom mb-2">A sample for the selected category is used unless you upload your own.</p>
+                                        <div class="vto-samples" id="itemSamples" role="listbox" aria-label="Sample items"></div>
+                                        <input class="form-control mt-2" type="file" id="item_image" name="item_image" accept="image/jpeg,image/png,image/webp">
+                                        <button type="button" class="btn btn-secondary-custom btn-sm mt-2" id="clearItemBtn" hidden>Use sample</button>
+                                        <div class="vto-preview" id="itemPreview" aria-live="polite">Select a category to see the sample item.</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="user_image" class="form-label">User image</label>
                                         <input class="form-control" type="file" id="user_image" name="user_image" accept="image/jpeg,image/png,image/webp" required>
+                                        <input type="file" id="userCameraNative" accept="image/*" capture="user" hidden>
+                                        <div class="d-flex flex-wrap gap-2 mt-2">
+                                            <button type="button" class="btn btn-secondary-custom btn-sm" id="openCameraBtn">Take photo</button>
+                                        </div>
+                                        <div class="vto-camera" id="cameraPanel" hidden>
+                                            <video id="cameraVideo" autoplay playsinline muted></video>
+                                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                                <button type="button" class="btn btn-primary-custom btn-sm" id="captureBtn">Capture</button>
+                                                <button type="button" class="btn btn-secondary-custom btn-sm" id="flipCameraBtn">Flip camera</button>
+                                                <button type="button" class="btn btn-secondary-custom btn-sm" id="closeCameraBtn">Close</button>
+                                            </div>
+                                            <p class="small text-secondary-custom mt-2 mb-0" id="cameraStatus"></p>
+                                        </div>
                                         <div class="vto-preview" id="userPreview" aria-live="polite">No user selected</div>
                                     </div>
                                 </div>
@@ -74,6 +90,12 @@ $vtoDebug = in_array($debugVal, ['1', 'true', 'on', 'yes'], true);
                     <pre class="vto-prompt" id="promptBox">The prompt will appear here after upload, before OpenAI is called.</pre>
                 </div>
 
+                <div class="custom-card vto-prompt-card mt-4" id="maskCard">
+                    <h2 class="h5 mb-3">Face lock mask</h2>
+                    <p class="small text-secondary-custom">Transparent / punched area is editable. White stays the original photo.</p>
+                    <div class="vto-preview" id="maskBox">Mask preview will appear here.</div>
+                </div>
+
                 <div class="custom-card vto-prompt-card mt-4" id="rawCard">
                     <h2 class="h5 mb-3">Raw OpenAI response</h2>
                     <pre class="vto-prompt" id="rawBox">The unmodified OpenAI body will appear here before the result image is rendered.</pre>
@@ -86,6 +108,6 @@ $vtoDebug = in_array($debugVal, ['1', 'true', 'on', 'yes'], true);
     <div data-shared-footer></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/subpage-layout.js"></script>
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>

@@ -27,12 +27,10 @@ const VTO_ALLOWED_MIME = [
 ];
 
 $identityLock = <<<'TXT'
-LOCKED BASE PHOTO: Image 1 is the user photograph. It is the only allowed canvas.
-- Keep the person EXACT: same face, skin, eyes, teeth, makeup, hair (except where the item must cover it), earrings, jewellery already worn, clothing already worn, pose, crop, camera angle, background, lighting, and resolution framing.
-- Do not beautify, restyle, re-age, re-light, re-crop, or regenerate the portrait.
-- Do not change body shape or facial identity. If unsure, leave pixels from the user photo untouched.
-- Image 2 is the item only. Composite that item onto Image 1. Match the item's true color, shape, and details.
-- Output must look like the original upload with only the try-on item added, aligned to anatomy and perspective.
+LOCKED BASE PHOTO: Image 1 is the user photograph. A transparency mask marks the only pixels you may change.
+- Outside the mask, copy Image 1 exactly: face, skin, eyes, pose, crop, lighting, and background.
+- Inside the mask, composite the item from Image 2 with correct scale, perspective, occlusion, and lighting.
+- Do not beautify or regenerate the person. No collage. No text.
 TXT;
 
 $categories = [
@@ -41,7 +39,7 @@ $categories = [
         'prompt' => $identityLock . <<<'TXT'
 
 
-Task: replace only the garment region with the clothing from the item photo. Keep every other pixel of the person photo the same. Fit the garment to the existing pose with natural folds. No collage. No text.
+Task: a mask marks the body below the jaw. Change only that region: fit the garment from the item photo with natural folds and the existing pose. Do not alter the face or hair. No collage. No text.
 TXT,
     ],
     'jewellery' => [
@@ -49,7 +47,7 @@ TXT,
         'prompt' => $identityLock . <<<'TXT'
 
 
-Task: add the jewellery from the item photo onto the correct body part (necklace, earrings, ring, bracelet, etc.). Do not move the head or change existing jewellery unless the item replaces that piece. Scale to anatomy. No collage. No text.
+Task: a mask marks ears, neck, and hairline. Place the jewellery from the item photo only in that mask, scaled to anatomy, with metal/stone reflections. Do not change the face. No collage. No text.
 TXT,
     ],
     'cap' => [
@@ -57,7 +55,7 @@ TXT,
         'prompt' => $identityLock . <<<'TXT'
 
 
-Task: place the cap from the item photo on the head. Align the brim to the forehead, follow head tilt, and tuck hair under the cap only where a real cap would cover it. Do not change the face, neck, clothing, or background. No collage. No text.
+Task: a mask marks the crown and forehead. Seat the cap from the item photo only in that mask. Match head tilt, brim angle, and tuck hair under the cap. Do not change the face below the brows, clothing, or background. No collage. No text.
 TXT,
     ],
     'spectacles' => [
@@ -65,7 +63,7 @@ TXT,
         'prompt' => $identityLock . <<<'TXT'
 
 
-Task: place the spectacles on the eyes and nose bridge, temples over the ears. Keep lenses clear unless the item is sunglasses. Do not change the face, eyes, or background. No collage. No text.
+Task: a mask marks the eye/temple band. Place the spectacles from the item photo only in that mask, aligned to the eyes and nose bridge, temples to the ears. Keep lenses clear unless the item is sunglasses. Do not change the rest of the face. No collage. No text.
 TXT,
     ],
 ];
@@ -151,6 +149,40 @@ function vto_save_upload(array $file, string $role, string $uploadDir): array
     }
 
     return ['path' => $dest, 'name' => $name, 'mime' => $mime];
+}
+
+
+function vto_sample_path(string $category): string
+{
+    $file = __DIR__ . '/samples/' . $category . '.jpg';
+    return is_file($file) ? $file : '';
+}
+
+function vto_copy_sample(string $category, string $uploadDir): array
+{
+    $src = vto_sample_path($category);
+    if ($src === '') {
+        vto_fail(400, 'No sample item for this category. Please upload an item image.');
+    }
+    $name = 'item_' . bin2hex(random_bytes(8)) . '.jpg';
+    $dest = $uploadDir . '/' . $name;
+    if (!copy($src, $dest)) {
+        vto_fail(500, 'Could not use the sample item image.');
+    }
+    return ['path' => $dest, 'name' => $name, 'mime' => 'image/jpeg'];
+}
+
+function vto_item_from_request(string $category, string $uploadDir): array
+{
+    $file = $_FILES['item_image'] ?? [];
+    $err = $file['error'] ?? UPLOAD_ERR_NO_FILE;
+    if ($err === UPLOAD_ERR_OK) {
+        return vto_save_upload($file, 'item', $uploadDir);
+    }
+    if ($err !== UPLOAD_ERR_NO_FILE) {
+        vto_fail(400, 'Item image upload failed.', ['errors' => ['code' => $err]]);
+    }
+    return vto_copy_sample($category, $uploadDir);
 }
 
 function vto_stored_file(string $name, string $role, string $uploadDir): array
@@ -242,7 +274,34 @@ function vto_web_optimize(string $binary, array $env): array
     return ['binary' => $out, 'ext' => $ext];
 }
 
-function vto_openai_edit(string $apiKey, string $model, string $prompt, array $userFile, array $itemFile, array $opts): array
+function vto_save_mask(array $file, string $uploadDir): ?array
+{
+    if (($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+    if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+        vto_fail(400, 'Mask upload failed.');
+    }
+    if (($file['size'] ?? 0) <= 0 || $file['size'] > VTO_MAX_BYTES) {
+        vto_fail(400, 'Mask must be a PNG up to 8 MB.');
+    }
+    $tmp = (string) $file['tmp_name'];
+    if (!is_uploaded_file($tmp)) {
+        vto_fail(400, 'Invalid mask upload.');
+    }
+    $mime = vto_detect_mime($tmp, (string) ($file['type'] ?? ''));
+    if ($mime !== 'image/png') {
+        vto_fail(400, 'Mask must be a PNG with transparency.');
+    }
+    $name = 'mask_' . bin2hex(random_bytes(8)) . '.png';
+    $dest = $uploadDir . '/' . $name;
+    if (!move_uploaded_file($tmp, $dest)) {
+        vto_fail(500, 'Could not store mask.');
+    }
+    return ['path' => $dest, 'name' => $name, 'mime' => 'image/png'];
+}
+
+function vto_openai_edit(string $apiKey, string $model, string $prompt, array $userFile, array $itemFile, array $opts, ?array $maskFile = null): array
 {
     $ch = curl_init('https://api.openai.com/v1/images/edits');
     if ($ch === false) {
@@ -260,6 +319,9 @@ function vto_openai_edit(string $apiKey, string $model, string $prompt, array $u
         'image[0]' => new CURLFile($userFile['path'], $userFile['mime'], $userFile['name']),
         'image[1]' => new CURLFile($itemFile['path'], $itemFile['mime'], $itemFile['name']),
     ];
+    if ($maskFile !== null) {
+        $post['mask'] = new CURLFile($maskFile['path'], 'image/png', $maskFile['name']);
+    }
     if (in_array($opts['output_format'], ['jpeg', 'webp'], true)) {
         $post['output_compression'] = (string) $opts['output_compression'];
     }
@@ -325,7 +387,7 @@ $debug = vto_debug_on($env);
 
 if ($action === 'prepare') {
     $userFile = vto_save_upload($_FILES['user_image'] ?? [], 'user', $uploadDir);
-    $itemFile = vto_save_upload($_FILES['item_image'] ?? [], 'item', $uploadDir);
+    $itemFile = vto_item_from_request($category, $uploadDir);
     $userUrl = $base . '/uploads/' . $userFile['name'];
     $itemUrl = $base . '/uploads/' . $itemFile['name'];
     $prompt = vto_build_prompt($categories, $category, $userUrl, $itemUrl);
@@ -358,6 +420,7 @@ if ($apiKey === '') {
 
 $userFile = vto_stored_file((string) ($_POST['user_name'] ?? ''), 'user', $uploadDir);
 $itemFile = vto_stored_file((string) ($_POST['item_name'] ?? ''), 'item', $uploadDir);
+$maskFile = vto_save_mask($_FILES['mask'] ?? [], $uploadDir);
 $userUrl = $base . '/uploads/' . $userFile['name'];
 $itemUrl = $base . '/uploads/' . $itemFile['name'];
 $prompt = vto_build_prompt($categories, $category, $userUrl, $itemUrl);
@@ -375,7 +438,14 @@ $opts = [
     'output_compression' => min(90, max(40, (int) ($env['OPENAI_OUTPUT_COMPRESSION'] ?? 70))),
 ];
 
-$openai = vto_openai_edit($apiKey, $model, $prompt, $userFile, $itemFile, $opts);
+$openai = vto_openai_edit($apiKey, $model, $prompt, $userFile, $itemFile, $opts, $maskFile);
+if ($maskFile !== null && $openai['http'] >= 400) {
+    $errMsg = strtolower((string) (($openai['decoded']['error']['message'] ?? '')));
+    if (str_contains($errMsg, 'mask') || str_contains($errMsg, 'invalid')) {
+        $openai = vto_openai_edit($apiKey, $model, $prompt, $userFile, $itemFile, $opts, null);
+    }
+}
+
 $rawDebug = $debug ? vto_debug_raw($openai['raw'], $openai['decoded']) : '';
 $debugExtra = $debug ? ['raw_response' => $rawDebug, 'openai_http' => $openai['http'], 'prompt' => $prompt] : [];
 
@@ -428,5 +498,8 @@ if ($debug) {
     $ok['user_url'] = $userUrl;
     $ok['raw_response'] = $rawDebug;
     $ok['openai_http'] = $openai['http'];
+    if ($maskFile !== null) {
+        $ok['mask_url'] = $base . '/uploads/' . $maskFile['name'];
+    }
 }
 vto_ok($ok);
