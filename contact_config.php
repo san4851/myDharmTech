@@ -11,8 +11,8 @@ require_once __DIR__ . '/env_loader.php';
 $env = loadEnv(__DIR__ . '/.env');
 
 return [
-    // Recipient email address (where form submissions will be sent)
-    'recipient_email' => 'san4851@gmail.com',
+    // Recipient email (SEND_CONTACT_FORM_DATA_TO in .env)
+    'recipient_email' => !empty($env['SEND_CONTACT_FORM_DATA_TO']) ? trim($env['SEND_CONTACT_FORM_DATA_TO']) : 'san4851@gmail.com',
 
     // From email address (sender)
     'from_email' => 'tech@mydharm.com',
