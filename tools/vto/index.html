@@ -2,82 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Try-On Demo | myDharm Technologies</title>
-    <meta name="description" content="Demo virtual try-on for apparel, jewellery, caps, and spectacles using uploaded photos.">
-    <meta name="robots" content="noindex, nofollow">
-    <script src="../../assets/js/subpage-head.js" data-base-path="../../" data-icons="true"></script>
-    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="refresh" content="0;url=index.php">
+    <title>Virtual Try-On</title>
 </head>
-<body data-base-path="../../">
-    <div data-shared-nav></div>
-
-    <main>
-        <section class="section">
-            <div class="container">
-                <h1 class="section-title text-center">Virtual Try-On</h1>
-                <p class="section-subtitle text-center">Upload a product photo and a person photo, pick a category, then generate a photorealistic try-on.</p>
-
-                <div class="row g-4">
-                    <div class="col-lg-6">
-                        <div class="custom-card vto-card">
-                            <form id="vtoForm" action="" method="post" enctype="multipart/form-data" novalidate>
-                                <div class="mb-3">
-                                    <label for="category" class="form-label">Category</label>
-                                    <select class="form-select" id="category" name="category" required>
-                                        <option value="">Select category</option>
-                                        <option value="apparel">Apparel</option>
-                                        <option value="jewellery">Jewellery</option>
-                                        <option value="cap">Cap</option>
-                                        <option value="spectacles">Spectacles</option>
-                                    </select>
-                                </div>
-
-                                <div class="row g-3 mb-3">
-                                    <div class="col-md-6">
-                                        <label for="item_image" class="form-label">Item image</label>
-                                        <input class="form-control" type="file" id="item_image" name="item_image" accept="image/jpeg,image/png,image/webp" required>
-                                        <div class="vto-preview" id="itemPreview" aria-live="polite">No item selected</div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="user_image" class="form-label">User image</label>
-                                        <input class="form-control" type="file" id="user_image" name="user_image" accept="image/jpeg,image/png,image/webp" required>
-                                        <div class="vto-preview" id="userPreview" aria-live="polite">No user selected</div>
-                                    </div>
-                                </div>
-
-                                <div class="form-status-message" id="formStatusMessage" aria-live="polite"></div>
-                                <button type="submit" class="btn btn-primary-custom" id="submitBtn">Generate try-on</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="custom-card vto-card">
-                            <h2 class="h5 mb-3">Result</h2>
-                            <div class="vto-result" id="resultBox">
-                                <p class="text-secondary-custom mb-0">The generated image will appear here after submit.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="custom-card vto-prompt-card mt-4" id="promptCard">
-                    <h2 class="h5 mb-3">Prepared prompt</h2>
-                    <pre class="vto-prompt" id="promptBox">The prompt will appear here after upload, before OpenAI is called.</pre>
-                </div>
-
-                <div class="custom-card vto-prompt-card mt-4" id="rawCard">
-                    <h2 class="h5 mb-3">Raw OpenAI response</h2>
-                    <pre class="vto-prompt" id="rawBox">The unmodified OpenAI body will appear here before the result image is rendered.</pre>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <div data-shared-footer></div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/js/subpage-layout.js"></script>
-    <script src="app.js"></script>
+<body>
+    <p><a href="index.php">Open Virtual Try-On</a></p>
 </body>
 </html>

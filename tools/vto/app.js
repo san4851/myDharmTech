@@ -9,9 +9,10 @@
     const userPreview = document.getElementById("userPreview");
     const promptBox = document.getElementById("promptBox");
     const rawBox = document.getElementById("rawBox");
+    const debug = document.body.dataset.vtoDebug === "1";
 
     function apiUrl() {
-        let path = window.location.pathname.replace(/\/index\.html$/i, "/");
+        let path = window.location.pathname.replace(/\/index\.(html|php)$/i, "/");
         if (!path.endsWith("/")) {
             path += "/";
         }
@@ -21,6 +22,12 @@
     function setStatus(type, text) {
         statusMessage.textContent = text;
         statusMessage.className = "form-status-message" + (type ? " " + type : "");
+    }
+
+    function setDebugText(el, text) {
+        if (debug && el) {
+            el.textContent = text;
+        }
     }
 
     function previewFile(input, target, emptyText) {
@@ -83,20 +90,20 @@
         }
 
         submitBtn.disabled = true;
-        submitBtn.textContent = "Preparing prompt…";
-        resultBox.innerHTML = '<p class="text-secondary-custom mb-0">Uploading images and preparing prompt…</p>';
-        promptBox.textContent = "Preparing prompt…";
-        rawBox.textContent = "Waiting for OpenAI…";
+        submitBtn.textContent = debug ? "Preparing prompt…" : "Generating…";
+        resultBox.innerHTML = '<p class="text-secondary-custom mb-0">Uploading images…</p>';
+        setDebugText(promptBox, "Preparing prompt…");
+        setDebugText(rawBox, "Waiting for OpenAI…");
 
         try {
             const prepareBody = new FormData(form);
             prepareBody.set("action", "prepare");
             const prepared = await postJson(prepareBody);
-            promptBox.textContent = prepared.data.prompt || "No prompt returned.";
-            setStatus("", "Prompt ready. Calling OpenAI…");
+            setDebugText(promptBox, prepared.data.prompt || "No prompt returned.");
+            setStatus("", debug ? "Prompt ready. Calling OpenAI…" : "Generating try-on…");
 
             submitBtn.textContent = "Calling OpenAI…";
-            resultBox.innerHTML = '<p class="text-secondary-custom mb-0">Prompt is ready. Sending it to OpenAI…</p>';
+            resultBox.innerHTML = '<p class="text-secondary-custom mb-0">Sending to OpenAI…</p>';
 
             const generateBody = new FormData();
             generateBody.set("action", "generate");
@@ -105,7 +112,7 @@
             generateBody.set("item_name", prepared.data.item_name);
             const generated = await postJson(generateBody);
 
-            rawBox.textContent = generated.data.raw_response || generated.text || "Empty OpenAI body.";
+            setDebugText(rawBox, generated.data.raw_response || generated.text || "Empty OpenAI body.");
 
             resultBox.innerHTML =
                 '<img src="' + generated.data.result_url + '" alt="Virtual try-on result">' +
@@ -114,10 +121,8 @@
                 "</p>";
             setStatus("success", generated.data.message || "Try-on image generated.");
         } catch (err) {
-            if (err.raw) {
-                rawBox.textContent = err.raw;
-            }
-            if (!promptBox.textContent || promptBox.textContent === "Preparing prompt…") {
+            setDebugText(rawBox, err.raw || "");
+            if (debug && promptBox && (!promptBox.textContent || promptBox.textContent === "Preparing prompt…")) {
                 promptBox.textContent = "Prompt was not prepared. See the raw response below.";
             }
             resultBox.innerHTML = '<p class="text-secondary-custom mb-0">No result yet.</p>';
