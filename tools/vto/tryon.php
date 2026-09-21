@@ -17,7 +17,9 @@ ignore_user_abort(true);
 ini_set('display_errors', '0');
 
 require_once dirname(__DIR__, 2) . '/env_loader.php';
+require_once __DIR__ . '/access_control.php';
 $env = loadEnv(__DIR__ . '/.env');
+vto_access_require_api($env);
 
 const VTO_MAX_BYTES = 8 * 1024 * 1024;
 const VTO_ALLOWED_MIME = [

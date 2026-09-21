@@ -121,7 +121,18 @@ function decode_scanned_text(string $raw): array
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'decode') {
     header('Content-Type: application/json; charset=utf-8');
     $raw = (string) ($_POST['text'] ?? '');
-    echo json_encode(['ok' => true, 'data' => decode_scanned_text($raw)], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    $decoded = decode_scanned_text($raw);
+    $logEntry = json_encode([
+        'scannedAt' => date('c'),
+        'ip' => filter_var($_SERVER['REMOTE_ADDR'] ?? '', FILTER_VALIDATE_IP) ?: 'unknown',
+        'raw' => $raw,
+        'decoded' => $decoded,
+    ], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    if ($logEntry !== false) {
+        file_put_contents(__DIR__ . '/scanned_json.log', $logEntry . PHP_EOL, FILE_APPEND | LOCK_EX);
+    }
+
+    echo json_encode(['ok' => true, 'data' => $decoded], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     exit;
 }
 
@@ -169,6 +180,7 @@ function h(string $value): string
     <meta name="robots" content="noindex, nofollow">
     <title>Product barcode demo | myDharm Technologies</title>
     <link rel="icon" type="image/png" href="../../logo/favicon/favicon-32x32.png">
+    <script src="../../assets/js/subpage-head.js" data-base-path="../../" data-icons="true"></script>
     <style>
         :root {
             --primary: #6366f1;
@@ -187,11 +199,13 @@ function h(string $value): string
             background: var(--bg);
             color: var(--text);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        .product-barcode-page {
             padding: 1rem;
             padding-bottom: max(2.5rem, env(safe-area-inset-bottom));
         }
-        .wrap { max-width: 420px; margin: 0 auto; }
-        h1 {
+        .product-barcode-page .wrap { max-width: 420px; margin: 0 auto; }
+        .product-barcode-page h1 {
             font-size: 1.25rem;
             margin: 0.25rem 0 0.35rem;
             background: linear-gradient(135deg, var(--primary), var(--accent));
@@ -199,17 +213,17 @@ function h(string $value): string
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .lede, .note { color: var(--muted); font-size: 0.85rem; line-height: 1.45; margin: 0 0 1.1rem; }
-        section {
+        .product-barcode-page .lede, .product-barcode-page .note { color: var(--muted); font-size: 0.85rem; line-height: 1.45; margin: 0 0 1.1rem; }
+        .product-barcode-page section {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 14px;
             padding: 1rem;
             margin-bottom: 1rem;
         }
-        h2 { font-size: 1rem; margin: 0 0 0.85rem; }
-        label { display: block; font-size: 0.78rem; color: var(--muted); margin: 0.65rem 0 0.3rem; }
-        input, textarea {
+        .product-barcode-page h2 { font-size: 1rem; margin: 0 0 0.85rem; }
+        .product-barcode-page label { display: block; font-size: 0.78rem; color: var(--muted); margin: 0.65rem 0 0.3rem; }
+        .product-barcode-page input, .product-barcode-page textarea {
             width: 100%;
             background: #0f172a;
             color: var(--text);
@@ -218,9 +232,9 @@ function h(string $value): string
             padding: 0.7rem 0.8rem;
             font-size: 1rem;
         }
-        textarea { min-height: 72px; resize: vertical; }
-        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-        button {
+        .product-barcode-page textarea { min-height: 72px; resize: vertical; }
+        .product-barcode-page .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+        .product-barcode-page button {
             width: 100%;
             margin-top: 0.95rem;
             border: 0;
@@ -232,18 +246,18 @@ function h(string $value): string
             background: linear-gradient(135deg, var(--primary), var(--accent));
             cursor: pointer;
         }
-        button.secondary {
+        .product-barcode-page button.secondary {
             background: transparent;
             border: 1px solid var(--border);
             color: var(--text);
         }
-        .errors { color: var(--err); font-size: 0.85rem; margin: 0 0 0.75rem; padding: 0; }
-        .qr-box, .barcode-box { margin-top: 1rem; text-align: center; }
-        .qr-box svg { width: min(100%, 240px); height: auto; background: #fff; border-radius: 8px; padding: 10px; }
-        .barcode-box svg { width: 100%; height: auto; background: #fff; border-radius: 8px; padding: 10px 8px; }
-        .barcode-value { margin: 0.45rem 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.08em; font-size: 0.85rem; }
-        #reader { display: none; margin-top: 0.75rem; overflow: hidden; border-radius: 10px; }
-        #scan-json {
+        .product-barcode-page .errors { color: var(--err); font-size: 0.85rem; margin: 0 0 0.75rem; padding: 0; }
+        .product-barcode-page .qr-box, .product-barcode-page .barcode-box { margin-top: 1rem; text-align: center; }
+        .product-barcode-page .qr-box svg { width: min(100%, 240px); height: auto; background: #fff; border-radius: 8px; padding: 10px; }
+        .product-barcode-page .barcode-box svg { width: 100%; height: auto; background: #fff; border-radius: 8px; padding: 10px 8px; }
+        .product-barcode-page .barcode-value { margin: 0.45rem 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.08em; font-size: 0.85rem; }
+        .product-barcode-page #reader { display: none; margin-top: 0.75rem; overflow: hidden; border-radius: 10px; }
+        .product-barcode-page #scan-json {
             display: none;
             margin-top: 0.85rem;
             background: #0f172a;
@@ -255,13 +269,16 @@ function h(string $value): string
             white-space: pre-wrap;
             word-break: break-word;
         }
-        .status { font-size: 0.82rem; margin-top: 0.6rem; color: var(--muted); }
-        .status.ok { color: var(--ok); }
-        .status.err { color: var(--err); }
+        .product-barcode-page .status { font-size: 0.82rem; margin-top: 0.6rem; color: var(--muted); }
+        .product-barcode-page .status.ok { color: var(--ok); }
+        .product-barcode-page .status.err { color: var(--err); }
     </style>
 </head>
-<body>
-    <div class="wrap">
+<body data-base-path="../../">
+    <div data-shared-nav></div>
+
+    <main class="product-barcode-page">
+        <div class="wrap">
         <h1>Product barcode demo</h1>
         <p class="lede">QR holds full product JSON. Code 128 holds digits only (item + price + qty).</p>
 
@@ -353,9 +370,13 @@ function h(string $value): string
             <pre id="scan-json"></pre>
             <p id="scan-status" class="status"></p>
         </section>
-    </div>
+        </div>
+    </main>
+
+    <div data-shared-footer></div>
 
     <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="../../assets/js/subpage-layout.js"></script>
     <script>
         const scanBtn = document.getElementById("scan-btn");
         const stopBtn = document.getElementById("stop-btn");

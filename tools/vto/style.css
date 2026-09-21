@@ -6,6 +6,31 @@ body {
     height: 100%;
 }
 
+.vto-item-selection {
+    padding: 1rem;
+    border: 1px solid #c7c9d9;
+    border-radius: 12px;
+    background: #f8f9ff;
+}
+
+.vto-upload-panel {
+    height: 100%;
+    padding: 1rem;
+    border: 1px solid #c7c9d9;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.vto-item-selection .form-label,
+.vto-upload-panel .form-label {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.vto-item-selection .text-secondary-custom {
+    color: #4b5563 !important;
+}
+
 .vto-preview,
 .vto-result {
     margin-top: 0.75rem;
@@ -83,14 +108,15 @@ input[type="file"] {
 }
 
 .vto-samples {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.5rem;
 }
 
 .vto-sample-btn {
-    width: 72px;
-    height: 72px;
+    width: 100%;
+    aspect-ratio: 1;
+    height: auto;
     padding: 0;
     border: 2px solid #c7c9d9;
     border-radius: 10px;
@@ -108,4 +134,10 @@ input[type="file"] {
 .vto-sample-btn.is-active {
     border-color: var(--primary-color, #6366f1);
     box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+}
+
+@media (max-width: 575.98px) {
+    .vto-samples {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }

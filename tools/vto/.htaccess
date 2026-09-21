@@ -4,6 +4,10 @@ DirectoryIndex index.php
     Require all denied
 </FilesMatch>
 
+<Files "vt_access_code.log">
+    Require all denied
+</Files>
+
 # Keep long OpenAI image jobs from being killed with "Request Timeout".
 <IfModule LiteSpeed>
     RewriteEngine On

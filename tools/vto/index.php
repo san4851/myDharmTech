@@ -1,9 +1,13 @@
 <?php
 declare(strict_types=1);
 require_once dirname(__DIR__, 2) . '/env_loader.php';
+require_once __DIR__ . '/access_control.php';
 $env = loadEnv(__DIR__ . '/.env');
 $debugVal = strtolower(trim((string) ($env['VTO_DEBUG'] ?? '0')));
 $vtoDebug = in_array($debugVal, ['1', 'true', 'on', 'yes'], true);
+$accessError = vto_access_handle_form($env);
+$hasAccess = vto_access_is_granted();
+$attemptsRemaining = max(0, vto_access_limit($env) - vto_access_attempts($env));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +26,27 @@ $vtoDebug = in_array($debugVal, ['1', 'true', 'on', 'yes'], true);
     <main>
         <section class="section">
             <div class="container">
+<?php if (!$hasAccess): ?>
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="custom-card vto-card">
+                            <h1 class="section-title text-center">Virtual Try-On Access</h1>
+                            <p class="section-subtitle text-center">Enter your VTO access code to use this demo.</p>
+<?php if ($accessError !== null): ?>
+                            <div class="alert alert-danger" role="alert"><?php echo htmlspecialchars($accessError, ENT_QUOTES, 'UTF-8'); ?></div>
+<?php endif; ?>
+                            <form method="post" novalidate>
+                                <div class="mb-3">
+                                    <label for="vto_access_code" class="form-label">VTO access code</label>
+                                    <input class="form-control" type="password" id="vto_access_code" name="vto_access_code" autocomplete="off" required autofocus<?php echo $attemptsRemaining === 0 ? ' disabled' : ''; ?>>
+                                </div>
+                                <button class="btn btn-primary-custom" type="submit" name="vto_access_submit" value="1"<?php echo $attemptsRemaining === 0 ? ' disabled' : ''; ?>>Continue</button>
+                            </form>
+                            <p class="small text-secondary-custom mt-3 mb-0">Need an access code? Request one through our <a href="../../contact/">Contact Us form</a>.</p>
+                        </div>
+                    </div>
+                </div>
+<?php else: ?>
                 <h1 class="section-title text-center">Virtual Try-On</h1>
                 <p class="section-subtitle text-center">Upload a product photo and a person photo, pick a category, then generate a photorealistic try-on.</p>
 
@@ -40,19 +65,29 @@ $vtoDebug = in_array($debugVal, ['1', 'true', 'on', 'yes'], true);
                                     </select>
                                 </div>
 
+                                <div class="vto-item-selection mb-4">
+                                    <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-2">
+                                        <label class="form-label mb-0">Choose an item</label>
+                                        <p class="small text-secondary-custom mb-0">Select a sample, or upload your own image below.</p>
+                                    </div>
+                                    <div class="vto-samples" id="itemSamples" role="listbox" aria-label="Sample items"></div>
+                                </div>
+
                                 <div class="row g-3 mb-3">
                                     <div class="col-md-6">
-                                        <label for="item_image" class="form-label">Item image</label>
-                                        <p class="small text-secondary-custom mb-2">A sample for the selected category is used unless you upload your own.</p>
-                                        <div class="vto-samples" id="itemSamples" role="listbox" aria-label="Sample items"></div>
+                                        <div class="vto-upload-panel">
+                                            <label for="item_image" class="form-label">Upload item image</label>
                                         <input class="form-control mt-2" type="file" id="item_image" name="item_image" accept="image/jpeg,image/png,image/webp">
                                         <button type="button" class="btn btn-secondary-custom btn-sm mt-2" id="clearItemBtn" hidden>Use sample</button>
                                         <div class="vto-preview" id="itemPreview" aria-live="polite">Select a category to see the sample item.</div>
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
+                                        <div class="vto-upload-panel">
                                         <label for="user_image" class="form-label">User image</label>
                                         <input class="form-control" type="file" id="user_image" name="user_image" accept="image/jpeg,image/png,image/webp" required>
                                         <input type="file" id="userCameraNative" accept="image/*" capture="user" hidden>
+                                        <div class="vto-preview" id="userPreview" aria-live="polite">No user selected</div>
                                         <div class="d-flex flex-wrap gap-2 mt-2">
                                             <button type="button" class="btn btn-secondary-custom btn-sm" id="openCameraBtn">Take photo</button>
                                         </div>
@@ -65,7 +100,7 @@ $vtoDebug = in_array($debugVal, ['1', 'true', 'on', 'yes'], true);
                                             </div>
                                             <p class="small text-secondary-custom mt-2 mb-0" id="cameraStatus"></p>
                                         </div>
-                                        <div class="vto-preview" id="userPreview" aria-live="polite">No user selected</div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -100,6 +135,7 @@ $vtoDebug = in_array($debugVal, ['1', 'true', 'on', 'yes'], true);
                     <h2 class="h5 mb-3">Raw OpenAI response</h2>
                     <pre class="vto-prompt" id="rawBox">The unmodified OpenAI body will appear here before the result image is rendered.</pre>
                 </div>
+<?php endif; ?>
 <?php endif; ?>
             </div>
         </section>

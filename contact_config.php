@@ -57,6 +57,7 @@ return [
         'wordpress',
         'mobile-app',
         'training',
+        'vto-access-code',
         'other'
     ],
 
@@ -67,6 +68,7 @@ return [
         'wordpress' => 'WordPress Development',
         'mobile-app' => 'Mobile Application',
         'training' => 'IT Training',
+        'vto-access-code' => 'VTO Access Code',
         'other' => 'Other'
     ],
 

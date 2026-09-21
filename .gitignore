@@ -4,3 +4,4 @@ tools/vto/.env
 tools/vto/uploads/*
 !tools/vto/uploads/.gitkeep
 !tools/vto/uploads/.htaccess
+tools/vto/vt_access_code.log
