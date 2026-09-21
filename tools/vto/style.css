@@ -1,0 +1,62 @@
+body {
+    padding-top: 72px;
+}
+
+.vto-card {
+    height: 100%;
+}
+
+.vto-preview,
+.vto-result {
+    margin-top: 0.75rem;
+    min-height: 180px;
+    border: 1px dashed #c7c9d9;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #f8f9ff;
+    color: #6b7280;
+    text-align: center;
+    padding: 0.75rem;
+}
+
+.vto-preview img,
+.vto-result img {
+    max-width: 100%;
+    max-height: 420px;
+    object-fit: contain;
+}
+
+.vto-result {
+    min-height: 320px;
+}
+
+#submitBtn:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+input[type="file"] {
+    max-width: 100%;
+}
+
+.vto-prompt-card {
+    margin-bottom: 2rem;
+}
+
+.vto-prompt {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #374151;
+    background: #f8f9ff;
+    border: 1px dashed #c7c9d9;
+    border-radius: 12px;
+    padding: 1rem;
+    max-height: 320px;
+    overflow: auto;
+}
