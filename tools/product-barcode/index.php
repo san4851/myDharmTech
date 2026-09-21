@@ -2,10 +2,14 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/lib/qrcode.php';
+require_once __DIR__ . '/lib/code128.php';
 
 $errors = [];
+$barcodeErrors = [];
 $product = null;
 $qrSvg = null;
+$barcodeSvg = null;
+$barcodeValue = null;
 $old = [
     'name' => '',
     'sku' => '',
@@ -13,6 +17,11 @@ $old = [
     'qty' => '',
     'category' => '',
     'notes' => '',
+];
+$oldNumeric = [
+    'item_code' => '',
+    'price' => '',
+    'qty' => '',
 ];
 
 function product_barcode_payload(array $src): array
@@ -60,15 +69,59 @@ function product_barcode_svg(string $text): string
     return (string) ob_get_clean();
 }
 
+function numeric_barcode_payload(array $src): array
+{
+    $item = preg_replace('/\D+/', '', (string) ($src['item_code'] ?? '')) ?? '';
+    $price = (float) ($src['price'] ?? 0);
+    $qty = (int) ($src['qty'] ?? 0);
+    $paise = (int) round($price * 100);
+    $value = sprintf('%06d%06d%04d', (int) $item, $paise, $qty);
+    return [
+        'itemCode' => str_pad($item, 6, '0', STR_PAD_LEFT),
+        'price' => $price,
+        'qty' => $qty,
+        'value' => $value,
+    ];
+}
+
+function numeric_barcode_validate(array $payload, string $itemRaw): array
+{
+    $errors = [];
+    if ($itemRaw === '' || !preg_match('/^\d{1,6}$/', $itemRaw)) {
+        $errors[] = 'Item code must be 1–6 digits.';
+    }
+    if ($payload['price'] < 0 || $payload['price'] > 9999.99) {
+        $errors[] = 'Price must be between 0 and 9999.99.';
+    }
+    if ($payload['qty'] < 0 || $payload['qty'] > 9999) {
+        $errors[] = 'Qty must be between 0 and 9999.';
+    }
+    return $errors;
+}
+
+function decode_scanned_text(string $raw): array
+{
+    $parsed = json_decode($raw, true);
+    if (is_array($parsed)) {
+        return ['format' => 'qr', 'data' => $parsed];
+    }
+    if (preg_match('/^\d{16}$/', $raw)) {
+        $paise = (int) substr($raw, 6, 6);
+        return [
+            'format' => 'code128',
+            'value' => $raw,
+            'itemCode' => substr($raw, 0, 6),
+            'price' => $paise / 100,
+            'qty' => (int) substr($raw, 12, 4),
+        ];
+    }
+    return ['format' => 'unknown', 'raw' => $raw];
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'decode') {
     header('Content-Type: application/json; charset=utf-8');
     $raw = (string) ($_POST['text'] ?? '');
-    $parsed = json_decode($raw, true);
-    if (is_array($parsed)) {
-        echo json_encode(['ok' => true, 'data' => $parsed], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    } else {
-        echo json_encode(['ok' => true, 'data' => ['raw' => $raw]], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    }
+    echo json_encode(['ok' => true, 'data' => decode_scanned_text($raw)], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     exit;
 }
 
@@ -85,6 +138,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'gener
     $errors = product_barcode_validate($product);
     if ($errors === []) {
         $qrSvg = product_barcode_svg(json_encode($product, JSON_UNESCAPED_UNICODE));
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'generate_barcode') {
+    $oldNumeric = [
+        'item_code' => (string) ($_POST['item_code'] ?? ''),
+        'price' => (string) ($_POST['price'] ?? ''),
+        'qty' => (string) ($_POST['qty'] ?? ''),
+    ];
+    $itemRaw = preg_replace('/\D+/', '', $oldNumeric['item_code']) ?? '';
+    $numeric = numeric_barcode_payload($_POST);
+    $barcodeErrors = numeric_barcode_validate($numeric, $itemRaw);
+    if ($barcodeErrors === []) {
+        $barcodeValue = $numeric['value'];
+        $barcodeSvg = code128_svg($barcodeValue);
     }
 }
 
@@ -170,8 +238,10 @@ function h(string $value): string
             color: var(--text);
         }
         .errors { color: var(--err); font-size: 0.85rem; margin: 0 0 0.75rem; padding: 0; }
-        .qr-box { margin-top: 1rem; text-align: center; }
+        .qr-box, .barcode-box { margin-top: 1rem; text-align: center; }
         .qr-box svg { width: min(100%, 240px); height: auto; background: #fff; border-radius: 8px; padding: 10px; }
+        .barcode-box svg { width: 100%; height: auto; background: #fff; border-radius: 8px; padding: 10px 8px; }
+        .barcode-value { margin: 0.45rem 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.08em; font-size: 0.85rem; }
         #reader { display: none; margin-top: 0.75rem; overflow: hidden; border-radius: 10px; }
         #scan-json {
             display: none;
@@ -193,10 +263,10 @@ function h(string $value): string
 <body>
     <div class="wrap">
         <h1>Product barcode demo</h1>
-        <p class="lede">PHP encodes product details as a QR code (2D barcode). Scan it to recover the same JSON.</p>
+        <p class="lede">QR holds full product JSON. Code 128 holds digits only (item + price + qty).</p>
 
         <section>
-            <h2>1. Enter product details</h2>
+            <h2>1. Enter product details (QR)</h2>
             <?php if ($errors): ?>
                 <ul class="errors">
                     <?php foreach ($errors as $error): ?>
@@ -229,7 +299,7 @@ function h(string $value): string
                 <label for="notes">Notes</label>
                 <textarea id="notes" name="notes" maxlength="120" placeholder="Size M, navy"><?= h($old['notes']) ?></textarea>
 
-                <button type="submit">Generate barcode</button>
+                <button type="submit">Generate QR code</button>
             </form>
             <?php if ($qrSvg): ?>
                 <div class="qr-box">
@@ -240,8 +310,43 @@ function h(string $value): string
         </section>
 
         <section>
-            <h2>2. Scan barcode</h2>
-            <p class="note">Uses the phone camera. HTTPS (or localhost) is required. Allow camera access when asked.</p>
+            <h2>2. Numeric barcode (Code 128)</h2>
+            <p class="note">Digits only: 6-digit item code + 6-digit price (paise) + 4-digit qty.</p>
+            <?php if ($barcodeErrors): ?>
+                <ul class="errors">
+                    <?php foreach ($barcodeErrors as $error): ?>
+                        <li><?= h($error) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+            <form method="post">
+                <input type="hidden" name="action" value="generate_barcode">
+                <label for="item_code">Item code (digits)</label>
+                <input id="item_code" name="item_code" inputmode="numeric" pattern="\d{1,6}" required maxlength="6" autocomplete="off" placeholder="100123" value="<?= h($oldNumeric['item_code']) ?>">
+                <div class="row">
+                    <div>
+                        <label for="barcode_price">Price</label>
+                        <input id="barcode_price" name="price" type="number" required min="0" max="9999.99" step="0.01" placeholder="499.00" value="<?= h($oldNumeric['price']) ?>">
+                    </div>
+                    <div>
+                        <label for="barcode_qty">Qty</label>
+                        <input id="barcode_qty" name="qty" type="number" required min="0" max="9999" step="1" placeholder="12" value="<?= h($oldNumeric['qty']) ?>">
+                    </div>
+                </div>
+                <button type="submit">Generate barcode</button>
+            </form>
+            <?php if ($barcodeSvg): ?>
+                <div class="barcode-box">
+                    <?= $barcodeSvg ?>
+                    <p class="barcode-value"><?= h((string) $barcodeValue) ?></p>
+                    <p class="note" style="margin: 0.6rem 0 0;">Scan this stripe barcode with the camera below.</p>
+                </div>
+            <?php endif; ?>
+        </section>
+
+        <section>
+            <h2>3. Scan</h2>
+            <p class="note">Uses the phone camera. Reads QR and Code 128. HTTPS (or localhost) is required.</p>
             <button type="button" id="scan-btn">Start camera scan</button>
             <button type="button" id="stop-btn" class="secondary" hidden>Stop camera</button>
             <div id="reader"></div>
@@ -298,7 +403,14 @@ function h(string $value): string
             try {
                 await scanner.start(
                     { facingMode: "environment" },
-                    { fps: 10, qrbox: { width: 220, height: 220 } },
+                    {
+                        fps: 10,
+                        qrbox: { width: 280, height: 140 },
+                        formatsToSupport: [
+                            Html5QrcodeSupportedFormats.QR_CODE,
+                            Html5QrcodeSupportedFormats.CODE_128
+                        ]
+                    },
                     async (decodedText) => {
                         try {
                             scanJson.textContent = await decodeOnServer(decodedText);
@@ -310,7 +422,7 @@ function h(string $value): string
                         stopScan();
                     }
                 );
-                setStatus("Aim at the QR code.");
+                setStatus("Aim at the QR or barcode.");
             } catch (err) {
                 setStatus("Camera failed: " + (err && err.message ? err.message : err), "err");
                 await stopScan();
