@@ -21,7 +21,7 @@
                 <div class="row g-4">
                     <div class="col-lg-6">
                         <div class="custom-card vto-card">
-                            <form id="vtoForm" action="tryon.php" method="post" enctype="multipart/form-data" novalidate>
+                            <form id="vtoForm" action="" method="post" enctype="multipart/form-data" novalidate>
                                 <div class="mb-3">
                                     <label for="category" class="form-label">Category</label>
                                     <select class="form-select" id="category" name="category" required>
@@ -63,8 +63,13 @@
                 </div>
 
                 <div class="custom-card vto-prompt-card mt-4" id="promptCard">
-                    <h2 class="h5 mb-3">Generated prompt</h2>
-                    <pre class="vto-prompt" id="promptBox">The prompt sent to OpenAI will appear here after submit.</pre>
+                    <h2 class="h5 mb-3">Prepared prompt</h2>
+                    <pre class="vto-prompt" id="promptBox">The prompt will appear here after upload, before OpenAI is called.</pre>
+                </div>
+
+                <div class="custom-card vto-prompt-card mt-4" id="rawCard">
+                    <h2 class="h5 mb-3">Raw OpenAI response</h2>
+                    <pre class="vto-prompt" id="rawBox">The unmodified OpenAI body will appear here before the result image is rendered.</pre>
                 </div>
             </div>
         </section>
