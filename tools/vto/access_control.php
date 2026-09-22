@@ -113,9 +113,21 @@ function vto_access_client_ip(): string
     return substr((string) ($_SERVER['REMOTE_ADDR'] ?? 'unknown'), 0, 45);
 }
 
-function vto_access_log_use(): void
+function vto_access_log_attempt(string $status, string $accessCode): void
 {
-    $line = sprintf("%s\tIP=%s\taccess_granted\n", gmdate('c'), vto_access_client_ip());
+    // Keep each entry on one line even if a submitted value contains control characters.
+    $accessCode = str_replace(
+        ['\\', "\r", "\n", "\t"],
+        ['\\\\', '\\r', '\\n', '\\t'],
+        $accessCode
+    );
+    $line = sprintf(
+        "%s\tIP=%s\t%s\tACCESS_CODE=%s\n",
+        gmdate('c'),
+        vto_access_client_ip(),
+        $status,
+        $accessCode
+    );
     @file_put_contents(__DIR__ . '/vt_access_code.log', $line, FILE_APPEND | LOCK_EX);
 }
 
@@ -135,12 +147,13 @@ function vto_access_handle_form(array $env): ?string
         return null;
     }
 
+    $submitted = trim((string) ($_POST['vto_access_code'] ?? ''));
     $limit = vto_access_limit($env);
     if (vto_access_attempts($env) >= $limit) {
+        vto_access_log_attempt('access_denied', $submitted);
         return 'Too many access-code attempts. Please try again later.';
     }
 
-    $submitted = trim((string) ($_POST['vto_access_code'] ?? ''));
     $valid = false;
     foreach (vto_access_codes($env) as $code) {
         if (hash_equals($code, $submitted)) {
@@ -150,6 +163,7 @@ function vto_access_handle_form(array $env): ?string
     }
 
     if (!$valid) {
+        vto_access_log_attempt('access_denied', $submitted);
         $attempts = vto_access_record_failed_attempt($env);
         if ($attempts >= $limit) {
             return 'Too many access-code attempts. Please try again later.';
@@ -159,7 +173,7 @@ function vto_access_handle_form(array $env): ?string
 
     session_regenerate_id(true);
     $_SESSION[VTO_ACCESS_SESSION_GRANTED] = true;
-    vto_access_log_use();
+    vto_access_log_attempt('access_granted', $submitted);
     header('Location: index.php', true, 303);
     exit;
 }
