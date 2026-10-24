@@ -10,26 +10,23 @@ ADB_PATH = "/home/santneel/Downloads/platform-tools-latest-linux/platform-tools/
 
 # Wi-Fi (wireless) ADB debugging
 # Set WIFI_DEBUG = True and fill in DEVICE_IP when using wireless debugging instead of USB.
+# Pair your device with Wi-Fi debugging before running this script.
+# /home/santneel/Downloads/platform-tools-latest-linux/platform-tools/adb pair 192.168.31.83:35955
 WIFI_DEBUG = True
-DEVICE_IP = "192.168.31.50"  # IP address shown in phone's Wi-Fi debugging screen
-DEVICE_PORT = 39353            # Port shown in phone's Wi-Fi debugging screen (default: 5555)
+DEVICE_IP = "192.168.31.83"  # IP address shown in phone's Wi-Fi debugging screen
+DEVICE_PORT = 43505            # Port shown in phone's Wi-Fi debugging screen (default: 5555)
 
 # Base adb command; automatically targets the Wi-Fi device when WIFI_DEBUG is enabled.
 ADB_BASE = [ADB_PATH, "-s", f"{DEVICE_IP}:{DEVICE_PORT}"] if WIFI_DEBUG else [ADB_PATH]
 
 SMS_COMPONENT = "com.microsoft.android.smsorganizer/.NewMessageActivity"
 PREFERRED_SIM_LABEL = "2"
-DEFAULT_SIM = 1  # Set to 1 to skip SIM selection and send via SIM 1 directly; set to 2 to select SIM 2 before sending.
+DEFAULT_SIM = 2  # Set to 1 to skip SIM selection and send via SIM 1 directly; set to 2 to select SIM 2 before sending.
 SIM_SWITCH_RETRIES = 3
 SEND_TAP_RETRIES = 3
 SET_DEFAULT_MESSAGE = True
 DEFAULT_MESSAGE = (
-    "🚩 राष्ट्रीय स्वयंसेवक संघ – नाथद्वारा नगर\n"
-    "गुरु दक्षिणा उत्सव\n"
-    "🗓️ 26 जुलाई 2026 (रविवार)\n"
-    "🕗 रात्रि 8:00 बजे\n"
-    "📍 संघ कार्यालय, प्रथम तल, दिल्ली बाजार, नाथद्वारा\n"
-    "पूर्ण गणवेश में आएँ तथा 10 मिनट पूर्व उपस्थित होकर अपना स्थान ग्रहण करें।\n"
+    "RSS Dasera Path Sanchalan, Nathdwara: 25 Oct, Sunday, 2:30 PM. Venue: Higher Secondary School, Fauz Mohalla. Attend in full Ganvesh."
     # "राष्ट्रीय स्वयं सेवक संघ खंड नाथद्वारा\n\n"
     # "सभी स्वयंसेवक ओर कार्यकर्ता इस लिंक का उपयोग कर दी गई जानकारी गूगल फॉर्म के माध्ययम् से पूर्ण करे ।\n\n"
     # "हर शाखा प्रत्येक स्वयंसेवक से  भरने का आग्रह करे ।\n\n"
